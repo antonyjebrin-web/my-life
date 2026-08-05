@@ -1,35 +1,41 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowRight, Quote } from 'lucide-react';
-import { GALLERY, REVIEWS, FAQS } from '@/data/site';
+import { GALLERY } from '@/data/site';
 import { Section, Reveal, Stars, Icon } from '@/components/ui';
+import { useLang } from '@/context/LanguageContext';
 
 export function Gallery() {
-  return (
-    <Section id="gallery" eyebrow="Gallery" title="Moments from Kanyakumari" subtitle="A glimpse of the light, the sea and the life that waits for you here.">
+  const { t } = useLang();
+
+  return (   
+    <Section id="gallery" eyebrow={t.gallerySection.eyebrow} title={t.gallerySection.title} subtitle={t.gallerySection.subtitle}>
       <div className="masonry">
         {GALLERY.map((src, i) => (
           <Reveal key={i} delay={(i % 3) * 0.05}>
             <div className="group overflow-hidden rounded-2xl shadow-soft">
-              <div className="relative overflow-hidden h-72 sm:h-80">
-                {src.endsWith('.mp4') ? (
-                  <video
-                    src={src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+<div className="relative overflow-hidden gallery-img">
+{src.endsWith('.mp4') ? (
+                  <div className="flex h-full w-full items-center justify-center overflow-hidden">
+                    <video
+                      src={src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      className="h-full w-full object-cover"
+                      style={src === '/kanyakumari.mp4' ? { transform: 'rotate(90deg)', transformOrigin: 'center' } : undefined}
+                    />
+                  </div>
                 ) : (
                   <img
                     src={src}
-                    alt={`Kanyakumari moment ${i + 1}`}
+                    alt={`${t.gallerySection.title} ${i + 1}`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+)}
               </div>
             </div>
           </Reveal>
@@ -40,18 +46,20 @@ export function Gallery() {
 }
 
 export function Reviews() {
-  const avg = (REVIEWS.reduce((s, r) => s + r.rating, 0) / REVIEWS.length).toFixed(1);
+  const { t } = useLang();
+  const avg = (t.reviews.reduce((s, r) => s + r.rating, 0) / t.reviews.length).toFixed(1);
+
   return (
-    <Section id="reviews" eyebrow="Traveler reviews" title="What travelers say" subtitle="Real reviews from real travelers. No paid placements, no edits.">
+    <Section id="reviews" eyebrow={t.reviewsSection.eyebrow} title={t.reviewsSection.title} subtitle={t.reviewsSection.subtitle}>
       <Reveal>
         <div className="mx-auto mb-10 flex max-w-md flex-col items-center gap-2 rounded-3xl border border-gray-100 bg-white p-6 text-center shadow-soft dark:border-white/10 dark:bg-slate-900/60">
           <p className="font-heading text-5xl font-bold text-ink dark:text-white">{avg}</p>
           <Stars rating={Math.round(Number(avg))} />
-          <p className="text-sm text-gray-500 dark:text-gray-400">Based on {REVIEWS.length}+ verified reviews</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t.reviewsSection.basedOn.replace('{count}', t.reviews.length.toString())}</p>
         </div>
       </Reveal>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {REVIEWS.map((r, i) => (
+        {t.reviews.map((r, i) => (
           <Reveal key={r.name} delay={i * 0.05}>
             <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-soft transition-all hover:-translate-y-1 hover:shadow-card dark:border-white/10 dark:bg-slate-900/60">
               <Quote className="h-7 w-7 text-ocean-200 dark:text-ocean-700" />
@@ -74,13 +82,14 @@ export function Reviews() {
   );
 }
 
-
 export function FAQ() {
+  const { t } = useLang();
   const [open, setOpen] = useState<number | null>(0);
+
   return (
-    <Section id="faq" eyebrow="FAQ" title="Questions, answered" subtitle="Everything you might want to know before you travel. Still unsure? Message us on WhatsApp.">
+    <Section id="faq" eyebrow={t.faqSection.eyebrow} title={t.faqSection.title} subtitle={t.faqSection.subtitle}>
       <div className="mx-auto max-w-3xl space-y-3">
-        {FAQS.map((f, i) => (
+        {t.faqs.map((f, i) => (
           <Reveal key={f.q} delay={i * 0.04}>
             <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-soft dark:border-white/10 dark:bg-slate-900/60">
               <button

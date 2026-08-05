@@ -1,29 +1,31 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, Star } from 'lucide-react';
-import { HOTEL_CATEGORIES, FOOD_GUIDE, MAP_PINS, WHATSAPP_LINK } from '@/data/site';
+import { WHATSAPP_LINK } from '@/data/site';
 import { Section, Reveal, Icon } from '@/components/ui';
+import { useLang } from '@/context/LanguageContext';
 
 export function HotelCategories() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useLang();
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % HOTEL_CATEGORIES.length);
+      setActiveIndex((current) => (current + 1) % t.hotelCategories.length);
     }, 3000);
     return () => window.clearInterval(interval);
-  }, []);
+  }, [t.hotelCategories.length]);
 
-  const activeHotel = HOTEL_CATEGORIES[activeIndex];
+  const activeHotel = t.hotelCategories[activeIndex];
 
   return (
-    <Section id="hotels" eyebrow="Where to stay" title="Hotels for every kind of traveler" subtitle="Every property is personally verified by our local team. Honest reviews, real photos and transparent pricing — no surprises at check-in.">
+    <Section id="hotels" eyebrow={t.sections.hotels.eyebrow} title={t.sections.hotels.title} subtitle={t.sections.hotels.subtitle}>
       <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr]">
         <div className="rounded-3xl border border-gray-100 bg-white shadow-soft dark:border-white/10 dark:bg-slate-900/60">
           <div className="relative overflow-hidden rounded-3xl">
-            <img src={activeHotel.img} alt={activeHotel.name} className="h-[520px] w-full object-cover transition-all duration-700" />
+<img src={activeHotel.img} alt={activeHotel.name} className="feat-img-tall w-full object-cover transition-all duration-700" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
-              <span className="text-xs uppercase tracking-[0.3em] text-cyan-100">Auto slider</span>
+<span className="text-xs uppercase tracking-[0.3em] text-cyan-100">{t.sections.hotels.autoSlider}</span>
               <h3 className="mt-3 text-3xl font-semibold">{activeHotel.name}</h3>
               <p className="mt-2 max-w-xl text-sm text-gray-200">{activeHotel.desc}</p>
               <div className="mt-4 flex flex-wrap gap-3 text-sm text-gray-200">
@@ -33,8 +35,8 @@ export function HotelCategories() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-3 border-t border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/60">
-            {HOTEL_CATEGORIES.map((hotel, index) => (
+<div className="grid grid-cols-2 gap-3 border-t border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/60 sm:grid-cols-3 lg:grid-cols-5">
+            {t.hotelCategories.map((hotel, index) => (
               <button
                 key={hotel.name}
                 type="button"
@@ -52,13 +54,13 @@ export function HotelCategories() {
         </div>
 
         <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-slate-900/60">
-          <h3 className="font-heading text-3xl font-semibold text-ink dark:text-white">Hotels for every kind of traveler</h3>
+          <h3 className="font-heading text-3xl font-semibold text-ink dark:text-white">{t.sections.hotels.overviewTitle}</h3>
           <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-            Pick the right stay for your group, budget and beachside mood — from budget-friendly rooms to luxury resorts.
+            {t.sections.hotels.overviewDesc}
           </p>
 
           <div className="mt-8 space-y-4 text-sm text-gray-600 dark:text-gray-300">
-            {HOTEL_CATEGORIES.map((hotel) => (
+            {t.hotelCategories.map((hotel) => (
               <div key={hotel.name} className="rounded-3xl border border-gray-100 bg-gray-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
                 <h4 className="font-semibold text-ink dark:text-white">{hotel.name}</h4>
                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{hotel.desc}</p>
@@ -72,7 +74,7 @@ export function HotelCategories() {
             rel="noreferrer"
             className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-ocean-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ocean-700"
           >
-            Recommend me a hotel
+            {t.sections.hotels.button}
           </a>
         </div>
       </div>
@@ -83,29 +85,31 @@ export function HotelCategories() {
 export function FoodGuide() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const { t } = useLang();
+
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % FOOD_GUIDE.length);
+      setActiveIndex((current) => (current + 1) % t.foodGuide.length);
     }, 3000);
     return () => window.clearInterval(interval);
-  }, []);
+  }, [t.foodGuide.length]);
 
-  const activeFood = FOOD_GUIDE[activeIndex];
+  const activeFood = t.foodGuide[activeIndex];
 
   return (
-    <Section id="food" eyebrow="Food guide" title="Eat like a local" subtitle="Experience authentic Kanyakumari cuisine, from fresh seafood to traditional meals.">
+    <Section id="food" eyebrow={t.sections.food.eyebrow} title={t.sections.food.title} subtitle={t.sections.food.subtitle}>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <div className="space-y-4">
           <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-slate-900/60">
-            <p className="text-sm uppercase tracking-[0.3em] text-ocean-700 dark:text-ocean-300">Eat Like a Local</p>
-            <h3 className="mt-3 font-heading text-3xl font-semibold text-ink dark:text-white">Authentic food picks from Kanyakumari</h3>
+            <p className="text-sm uppercase tracking-[0.3em] text-ocean-700 dark:text-ocean-300">{t.sections.food.introTag}</p>
+            <h3 className="mt-3 font-heading text-3xl font-semibold text-ink dark:text-white">{t.sections.food.introTitle}</h3>
             <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-              Discover the flavors that locals love — from fresh seafood to traditional Tamil meals, all served with coastal hospitality.
+              {t.sections.food.introDesc}
             </p>
           </div>
 
           <div className="space-y-3 rounded-3xl border border-gray-100 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-slate-900/60">
-            {FOOD_GUIDE.map((food, i) => (
+            {t.foodGuide.map((food, i) => (
               <Reveal key={food.name} delay={i * 0.04}>
                 <div className="rounded-3xl border border-gray-100 bg-gray-50 p-5 text-sm text-gray-700 dark:border-white/10 dark:bg-slate-950/40 dark:text-gray-200">
                   <h4 className="font-heading text-base font-semibold text-ink dark:text-white">{food.name}</h4>
@@ -118,15 +122,15 @@ export function FoodGuide() {
 
         <div className="rounded-3xl border border-gray-100 bg-white shadow-soft dark:border-white/10 dark:bg-slate-900/60">
           <div className="relative overflow-hidden rounded-3xl">
-            <img src={activeFood.img} alt={activeFood.name} className="h-[420px] w-full object-cover transition-all duration-700" />
+<img src={activeFood.img} alt={activeFood.name} className="feat-img-med w-full object-cover transition-all duration-700" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent p-5 text-white">
-              <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">Featured</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">{t.sections.food.featuredLabel}</p>
               <h3 className="mt-2 text-2xl font-semibold">{activeFood.name}</h3>
               <p className="mt-1 text-sm text-gray-200">{activeFood.desc}</p>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-3 border-t border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/60">
-            {FOOD_GUIDE.map((food, index) => (
+<div className="grid grid-cols-2 gap-3 border-t border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/60 sm:grid-cols-4">
+            {t.foodGuide.map((food, index) => (
               <button
                 key={food.name}
                 type="button"
@@ -143,17 +147,17 @@ export function FoodGuide() {
           </div>
 
           <div className="mt-5 space-y-4 rounded-b-3xl border-t border-gray-100 bg-slate-50 p-5 dark:border-white/10 dark:bg-slate-950/40">
-            <a
-              href={`https://wa.me/919043435765?text=${encodeURIComponent("Hi! I'd like your choice. Please recommend a food list and tell us what you're craving.")}`}
+<a
+              href={`https://wa.me/919043435765?text=${encodeURIComponent(t.sections.food.whatsappMessage)}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex w-full items-center justify-center rounded-full bg-ocean-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ocean-700"
             >
-              Your choice
+              {t.sections.food.button}
             </a>
             <div className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-              <p className="font-semibold text-ink dark:text-white">You choose the taste. We'll recommend the best place to enjoy it.</p>
-              <p className="mt-1">Tell us what you're craving.</p>
+              <p className="font-semibold text-ink dark:text-white">{t.sections.food.finalTitle}</p>
+              <p className="mt-1">{t.sections.food.finalDesc}</p>
             </div>
           </div>
         </div>
@@ -163,12 +167,14 @@ export function FoodGuide() {
 }
 
 export function InteractiveMap() {
+  const { t } = useLang();
+
   return (
-    <Section id="map" eyebrow="Find everything nearby" title="Interactive map of Kanyakumari" subtitle="Hotels, restaurants, tourist spots, hospitals, ATMs, parking, police and fuel — all in one view.">
+    <Section id="map" eyebrow={t.sections.map.eyebrow} title={t.sections.map.title} subtitle={t.sections.map.subtitle}>
       <Reveal>
         <div className="overflow-hidden rounded-3xl border border-gray-100 shadow-card dark:border-white/10">
           <div className="flex flex-wrap gap-2 border-b border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/70">
-            {MAP_PINS.map((p) => (
+            {t.mapPins.map((p) => (
               <span key={p.label} className="flex items-center gap-1.5 rounded-full bg-ocean-50 px-3 py-1.5 text-xs font-medium text-ocean-700 dark:bg-ocean-900/40 dark:text-ocean-200">
                 <Icon name={p.icon} className="h-3.5 w-3.5" />
                 {p.label}

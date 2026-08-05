@@ -35,18 +35,18 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled ? 'glass-strong shadow-soft' : 'bg-transparent'
+          scrolled ? 'bg-black shadow-soft' : 'bg-transparent'
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2">
+<a href="#home" className="flex items-center gap-2">
             <img
               src="/finel icon.png"
               alt="Logo"
-              className="h-9 w-9 rounded-2xl object-cover shadow-soft"
+              className="h-8 w-8 rounded-2xl object-cover shadow-soft sm:h-9 sm:w-9"
             />
-            <span className={`font-heading text-base font-semibold tracking-tight ${scrolled ? 'text-ink dark:text-white' : 'text-white drop-shadow'}`}>
+<span className={`font-heading text-sm font-semibold tracking-tight sm:text-base ${scrolled ? 'text-white' : 'text-white drop-shadow'}`}>
               Explore <span className="text-gradient-ocean">Kanyakumari</span>
             </span>
           </a>
@@ -59,7 +59,7 @@ export default function Navbar() {
                 href={`#${item.id}`}
                 className={`rounded-full px-3 py-1.5 text-sm font-bold transition-colors ${
                   scrolled
-                    ? 'text-gray-600 hover:bg-ocean-50 hover:text-ocean-700 dark:text-gray-300 dark:hover:bg-white/10'
+                    ? 'text-white hover:bg-white/10 hover:text-white'
                     : 'text-white/90 hover:bg-white/15 hover:text-white'
                 }`}
               >
@@ -76,8 +76,8 @@ export default function Navbar() {
                 onClick={() => setLangOpen((v) => !v)}
                 aria-label="Select language"
                 className={`flex h-9 items-center gap-1 rounded-full px-2.5 text-sm font-medium transition-colors ${
-                  scrolled ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-white/10' : 'text-white hover:bg-white/15'
-                }`}
+                    scrolled ? 'text-white hover:bg-white/10' : 'text-white hover:bg-white/15'
+                  }`}
               >
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">{LANGS.find((l) => l.code === lang)?.flag}</span>
@@ -118,7 +118,7 @@ export default function Navbar() {
               onClick={toggle}
               aria-label="Toggle dark mode"
               className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
-                scrolled ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-white/10' : 'text-white hover:bg-white/15'
+                scrolled ? 'text-white hover:bg-white/10' : 'text-white hover:bg-white/15'
               }`}
             >
               {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -132,7 +132,7 @@ export default function Navbar() {
               className="hidden items-center gap-1.5 rounded-full bg-[#25D366] px-3.5 py-2 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-105 sm:flex"
             >
               <Phone className="h-3.5 w-3.5" />
-              WhatsApp
+              {t.navbar.whatsapp}
             </a>
 
             {/* Mobile menu button */}
@@ -140,7 +140,7 @@ export default function Navbar() {
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               className={`flex h-9 w-9 items-center justify-center rounded-full lg:hidden ${
-                scrolled ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200' : 'text-white hover:bg-white/15'
+                scrolled ? 'text-white hover:bg-white/10' : 'text-white hover:bg-white/15'
               }`}
             >
               <Menu className="h-5 w-5" />
@@ -168,7 +168,7 @@ export default function Navbar() {
               className="fixed right-0 top-0 z-[70] flex h-full w-72 max-w-[80vw] flex-col bg-white p-5 shadow-2xl dark:bg-slate-900 lg:hidden"
             >
               <div className="mb-6 flex items-center justify-between">
-                <span className="font-heading text-lg font-semibold text-ink dark:text-white">Menu</span>
+                <span className="font-heading text-lg font-semibold text-ink dark:text-white">{t.navbar.menu}</span>
                 <button onClick={() => setOpen(false)} aria-label="Close menu" className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-white/10">
                   <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                 </button>
@@ -191,10 +191,10 @@ export default function Navbar() {
                 rel="noreferrer"
                 className="mt-auto flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-white"
               >
-                Chat on WhatsApp
+                {t.navbar.chatWhatsApp}
               </a>
               <a href={`tel:${SITE.phoneRaw}`} className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-ocean-600 px-4 py-3 text-sm font-semibold text-white">
-                Call {SITE.phone}
+                {t.navbar.call} {SITE.phone}
               </a>
             </motion.aside>
           </>

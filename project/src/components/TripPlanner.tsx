@@ -3,65 +3,63 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Wallet, CalendarDays, Heart, Hotel, Car, Camera, Sailboat, UtensilsCrossed, Check, MessageCircle, Mail, Sparkles, RotateCcw } from 'lucide-react';
 import { Section, Reveal } from '@/components/ui';
 import { SITE } from '@/data/site';
+import { useLang } from '@/context/LanguageContext';
 
 type Form = {
   travelers: number;
-  budget: string;
+  budgetIndex: number;
   days: number;
-  groupType: string;
+  groupIndex: number;
   hotel: boolean;
   cab: boolean;
   photography: boolean;
   boat: boolean;
-  food: string;
+  foodIndex: number;
 };
 
-const BUDGETS = ['Half-Day Planning ₹499', 'Full-Day Planning ₹999', 'Multi-Day Planning', 'Custom Quote'];
-const GROUPS = ['Family', 'Couple', 'Solo', 'Friends'];
-const FOODS = ['Any', 'Vegetarian', 'Seafood lover', 'Street food', 'Fine dining'];
-
 export default function TripPlanner() {
+  const { t } = useLang();
   const [form, setForm] = useState<Form>({
     travelers: 2,
-    budget: BUDGETS[1],
+    budgetIndex: 1,
     days: 3,
-    groupType: GROUPS[0],
+    groupIndex: 0,
     hotel: true,
     cab: true,
     photography: false,
     boat: true,
-    food: FOODS[0],
+    foodIndex: 0,
   });
   const [submitted, setSubmitted] = useState(false);
 
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
 
   const summary = [
-    `${form.travelers} traveler${form.travelers > 1 ? 's' : ''}`,
-    `${form.days} day${form.days > 1 ? 's' : ''}`,
-    form.groupType,
-    form.budget,
-    form.hotel && 'Hotel',
-    form.cab && 'Cab',
-    form.boat && 'Local Sea Boat Ride and Vivekananda Ferry',
-    form.photography && 'Photography',
-    `Food: ${form.food}`,
+    `${form.travelers} ${t.tripPlanner.summary.travelers}`,
+    `${form.days} ${t.tripPlanner.summary.days}`,
+    t.tripPlanner.groups[form.groupIndex],
+    t.tripPlanner.budgets[form.budgetIndex],
+    form.hotel ? t.tripPlanner.hotel : t.tripPlanner.summary.hotelNo,
+    form.cab ? t.tripPlanner.cab : t.tripPlanner.summary.cabNo,
+    form.boat ? t.tripPlanner.boat : t.tripPlanner.summary.boatNo,
+    form.photography ? t.tripPlanner.photography : t.tripPlanner.summary.photographyNo,
+    `${t.tripPlanner.summary.food}: ${t.tripPlanner.foods[form.foodIndex]}`,
   ].filter(Boolean) as string[];
 
   const buildWhatsAppMessage = () => {
     const details = [
-      `Travelers: ${form.travelers}`,
-      `Days: ${form.days}`,
-      `Group: ${form.groupType}`,
-      `Budget: ${form.budget}`,
-      `Hotel: ${form.hotel ? 'Yes' : 'No'}`,
-      `Cab: ${form.cab ? 'Yes' : 'No'}`,
-      `Local Sea Boat Ride and Vivekananda Ferry: ${form.boat ? 'Yes' : 'No'}`,
-      `Photography: ${form.photography ? 'Yes' : 'No'}`,
-      `Food: ${form.food}`,
+      `${t.tripPlanner.message.travelers} ${form.travelers}`,
+      `${t.tripPlanner.message.days} ${form.days}`,
+      `${t.tripPlanner.message.group} ${t.tripPlanner.groups[form.groupIndex]}`,
+      `${t.tripPlanner.message.budget} ${t.tripPlanner.budgets[form.budgetIndex]}`,
+      `${t.tripPlanner.message.hotel} ${form.hotel ? t.tripPlanner.summary.hotelYes : t.tripPlanner.summary.hotelNo}`,
+      `${t.tripPlanner.message.cab} ${form.cab ? t.tripPlanner.summary.cabYes : t.tripPlanner.summary.cabNo}`,
+      `${t.tripPlanner.message.boat} ${form.boat ? t.tripPlanner.summary.boatYes : t.tripPlanner.summary.boatNo}`,
+      `${t.tripPlanner.message.photography} ${form.photography ? t.tripPlanner.summary.photographyYes : t.tripPlanner.summary.photographyNo}`,
+      `${t.tripPlanner.message.food} ${t.tripPlanner.foods[form.foodIndex]}`,
     ];
 
-    return `Hi! I'd like a personalized Kanyakumari trip plan.\n\n${details.join('\n')}\n\nPlease help me plan.`;
+    return `${t.tripPlanner.message.intro}\n\n${details.join('\n')}\n\n${t.tripPlanner.message.closing}`;
   };
 
   const handleWhatsApp = () => {
@@ -71,7 +69,7 @@ export default function TripPlanner() {
   };
 
   const handleEmail = () => {
-    const subject = encodeURIComponent('Trip planning request for Kanyakumari');
+    const subject = encodeURIComponent(t.tripPlanner.message.intro);
     const body = encodeURIComponent(buildWhatsAppMessage());
     const url = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
 
@@ -84,10 +82,10 @@ export default function TripPlanner() {
   };
 
   return (
-    <Section id="planner" eyebrow="Trip Planner" title="Plan your trip in 30 seconds" subtitle="Tell us a few details and we'll prepare a personalized plan — then send it straight to our team on WhatsApp.">
+    <Section id="planner" eyebrow={t.tripPlanner.eyebrow} title={t.tripPlanner.title} subtitle={t.tripPlanner.subtitle}>
       <div className="mx-auto max-w-3xl">
         <Reveal>
-          <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-card dark:border-white/10 dark:bg-slate-900/70 sm:p-8">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-6 shadow-card dark:border-yellow-500/30 dark:bg-slate-900/70 sm:p-8">
             <AnimatePresence mode="wait">
               {!submitted ? (
                 <motion.div
@@ -97,56 +95,49 @@ export default function TripPlanner() {
                   exit={{ opacity: 0, y: -10 }}
                   className="space-y-6"
                 >
-                  {/* Travelers + Days */}
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="Travelers" icon={<Users className="h-4 w-4" />}>
+                    <Field label={t.tripPlanner.travelers} icon={<Users className="h-4 w-4" />}>
                       <Stepper value={form.travelers} min={1} max={20} onChange={(v) => set('travelers', v)} />
                     </Field>
-                    <Field label="Days" icon={<CalendarDays className="h-4 w-4" />}>
+                    <Field label={t.tripPlanner.days} icon={<CalendarDays className="h-4 w-4" />}>
                       <Stepper value={form.days} min={1} max={15} onChange={(v) => set('days', v)} />
                     </Field>
                   </div>
 
-                  {/* Budget */}
-                  <Field label="Budget" icon={<Wallet className="h-4 w-4" />}>
+                  <Field label={t.tripPlanner.budget} icon={<Wallet className="h-4 w-4" />}>
                     <div className="flex flex-wrap gap-2">
-                      {BUDGETS.map((b) => (
-                        <Chip key={b} active={form.budget === b} onClick={() => set('budget', b)}>{b}</Chip>
+                      {t.tripPlanner.budgets.map((b, index) => (
+                        <Chip key={b} active={form.budgetIndex === index} onClick={() => set('budgetIndex', index)}>{b}</Chip>
                       ))}
                     </div>
                   </Field>
 
-                  {/* Group type */}
-                  <Field label="Traveling as" icon={<Heart className="h-4 w-4" />}>
+                  <Field label={t.tripPlanner.travelingAs} icon={<Heart className="h-4 w-4" />}>
                     <div className="flex flex-wrap gap-2">
-                      {GROUPS.map((g) => (
-                        <Chip key={g} active={form.groupType === g} onClick={() => set('groupType', g)}>{g}</Chip>
+                      {t.tripPlanner.groups.map((g, index) => (
+                        <Chip key={g} active={form.groupIndex === index} onClick={() => set('groupIndex', index)}>{g}</Chip>
                       ))}
                     </div>
                   </Field>
 
-                  {/* Toggles */}
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <Toggle active={form.hotel} onClick={() => set('hotel', !form.hotel)} icon={<Hotel className="h-4 w-4" />} label="Hotel" />
-                    <Toggle active={form.cab} onClick={() => set('cab', !form.cab)} icon={<Car className="h-4 w-4" />} label="Cab" />
-                    <Toggle active={form.boat} onClick={() => set('boat', !form.boat)} icon={<Sailboat className="h-4 w-4" />} label="Local Sea Boat Ride and Vivekananda Ferry" />
-                    <Toggle active={form.photography} onClick={() => set('photography', !form.photography)} icon={<Camera className="h-4 w-4" />} label="Photography" />
+                    <Toggle active={form.hotel} onClick={() => set('hotel', !form.hotel)} icon={<Hotel className="h-4 w-4" />} label={t.tripPlanner.hotel} />
+                    <Toggle active={form.cab} onClick={() => set('cab', !form.cab)} icon={<Car className="h-4 w-4" />} label={t.tripPlanner.cab} />
+                    <Toggle active={form.boat} onClick={() => set('boat', !form.boat)} icon={<Sailboat className="h-4 w-4" />} label={t.tripPlanner.boat} />
+                    <Toggle active={form.photography} onClick={() => set('photography', !form.photography)} icon={<Camera className="h-4 w-4" />} label={t.tripPlanner.photography} />
                   </div>
 
-                  {/* Food */}
-                  <Field label="Food preference" icon={<UtensilsCrossed className="h-4 w-4" />}>
+                  <Field label={t.tripPlanner.foodPreference} icon={<UtensilsCrossed className="h-4 w-4" />}>
                     <div className="flex flex-wrap gap-2">
-                      {FOODS.map((f) => (
-                        <Chip key={f} active={form.food === f} onClick={() => set('food', f)}>{f}</Chip>
+                      {t.tripPlanner.foods.map((f, index) => (
+                        <Chip key={f} active={form.foodIndex === index} onClick={() => set('foodIndex', index)}>{f}</Chip>
                       ))}
                     </div>
                   </Field>
 
                   <div className="rounded-3xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600 dark:border-slate-700 dark:bg-slate-900/70 dark:text-gray-300">
-                    <p className="font-semibold text-ink dark:text-white">Small note:</p>
-                    <p className="mt-2 text-sm leading-relaxed">
-                      <span className="font-semibold">Hotel, cab, ferry tickets, and activity charges are billed separately.</span> We help you choose the best options based on your budget ..WE WITH U  
-                    </p>
+                    <p className="font-semibold text-ink dark:text-white">{t.tripPlanner.noteTitle}</p>
+                    <p className="mt-2 text-sm leading-relaxed">{t.tripPlanner.noteText}</p>
                   </div>
 
                   <button
@@ -154,7 +145,7 @@ export default function TripPlanner() {
                     className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-500 px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02]"
                   >
                     <Sparkles className="h-4 w-4 text-gold-400" />
-                    Create my trip plan
+                    {t.tripPlanner.createPlan}
                   </button>
                 </motion.div>
               ) : (
@@ -167,16 +158,12 @@ export default function TripPlanner() {
                   <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/30">
                     <Check className="h-8 w-8" />
                   </div>
-                  <h3 className="mt-5 font-heading text-2xl font-bold text-ink dark:text-white">Your trip plan is ready.</h3>
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    Based on your preferences, we've drafted a personalized plan. Send it to our team and we'll fine-tune the details with you.
-                  </p>
+                  <h3 className="mt-5 font-heading text-2xl font-bold text-ink dark:text-white">{t.tripPlanner.readyTitle}</h3>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{t.tripPlanner.readyDesc}</p>
 
                   <div className="mt-6 flex flex-wrap justify-center gap-2">
                     {summary.map((s) => (
-                      <span key={s} className="rounded-full bg-ocean-50 px-3 py-1.5 text-xs font-medium text-ocean-700 dark:bg-ocean-900/40 dark:text-ocean-200">
-                        {s}
-                      </span>
+                      <span key={s} className="rounded-full bg-ocean-50 px-3 py-1.5 text-xs font-medium text-ocean-700 dark:bg-ocean-900/40 dark:text-ocean-200">{s}</span>
                     ))}
                   </div>
 
@@ -187,7 +174,7 @@ export default function TripPlanner() {
                       className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] sm:w-auto"
                     >
                       <MessageCircle className="h-4 w-4" />
-                      Send on WhatsApp
+                      {t.tripPlanner.sendWhatsApp}
                     </button>
                     <button
                       type="button"
@@ -195,7 +182,7 @@ export default function TripPlanner() {
                       className="flex w-full items-center justify-center gap-2 rounded-2xl bg-ocean-600 px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] sm:w-auto"
                     >
                       <Mail className="h-4 w-4" />
-                      Send by Email
+                      {t.tripPlanner.sendEmail}
                     </button>
                     <button
                       type="button"
@@ -203,7 +190,7 @@ export default function TripPlanner() {
                       className="flex w-full items-center justify-center gap-2 rounded-2xl border border-gray-200 px-6 py-3.5 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/5 sm:w-auto"
                     >
                       <RotateCcw className="h-4 w-4" />
-                      Edit details
+                      {t.tripPlanner.editDetails}
                     </button>
                   </div>
                 </motion.div>

@@ -60,47 +60,47 @@ export const EXPERIENCES = [
 export const HOTEL_CATEGORIES = [
   {
     name: 'Budget Hotels',
-    desc: 'Clean, comfortable stays from ₹600/night',
-    img: IMG(15286, 900),
-    location: 'Near Town Center',
-    price: '₹600 – ₹1,200',
+    desc: 'Clean, comfortable Kanyakumari stays from ₹1,500/night.',
+    img: '/budgethotel.jpg',
+    location: 'Near town and local markets',
+    price: '₹1,500 – ₹2,500',
   },
   {
     name: 'Family Hotels',
     desc: 'Spacious rooms and kid-friendly amenities for groups.',
-    img: IMG(761963, 900),
-    location: 'Close to beaches and markets',
-    price: '₹1,200 – ₹2,500',
+    img: '/family.jpg',
+    location: 'Close to beaches and family dining',
+    price: '₹2,500 – ₹4,000',
   },
   {
     name: 'Sea View Hotels',
     desc: 'Wake up to sunrise views over the Bay of Bengal.',
-    img: IMG(1571457, 900),
+    img: '/beachside.jpg',
     location: 'Oceanfront promenade',
-    price: '₹2,500 – ₹4,000',
+    price: '₹4,000 – ₹6,500',
   },
   {
     name: 'Premium Hotels',
     desc: 'Thoughtful service, modern comforts and premium dining.',
-    img: IMG(221485, 900),
+    img: '/lux.jpg',
     location: 'Prime city locations',
-    price: '₹4,000 – ₹6,500',
+    price: '₹6,500 – ₹9,000',
   },
   {
     name: 'Luxury Resorts',
     desc: 'Private pools, spa treatments and ultimate relaxation.',
     img: IMG(323772, 900),
     location: 'Beachside resorts',
-    price: '₹6,500+',
+    price: '₹9,000+',
   },
 ];
 
 export const FOOD_GUIDE = [
-  { name: 'Best Seafood', icon: 'Fish', desc: 'Fresh catch grilled, fried and curried.', img: IMG(1640777, 900) },
-  { name: 'Best Vegetarian', icon: 'Leaf', desc: 'Pure-veg restaurants with South Indian thalis.', img: IMG(302680, 900) },
-  { name: 'Traditional Tamil Food', icon: 'Soup', desc: 'Banana leaf meals and spicy home-style curry.', img: IMG(1624487, 900) },
-  { name: 'Budget Food', icon: 'Wallet', desc: 'Filling meals under ₹150.', img: IMG(1437768, 900) },
-  { name: 'Premium Dining', icon: 'Wine', desc: 'Fine-dine with sea views.', img: IMG(369352, 900) },
+  { name: 'Best Seafood', icon: 'Fish', desc: 'Fresh catch grilled, fried and curried.', img: '/seafood.png' },
+  { name: 'Best Vegetarian', icon: 'Leaf', desc: 'Pure-veg restaurants with South Indian thalis.', img: '/veg food.png' },
+  { name: 'Traditional Tamil Food', icon: 'Soup', desc: 'Banana leaf meals and spicy home-style curry.', img: '/trfood.png' },
+  { name: 'Budget Food', icon: 'Wallet', desc: 'Filling meals under ₹150.', img: '/budgetfood.png' },
+  { name: 'Premium Dining', icon: 'Wine', desc: 'Fine-dine with sea views.', img: '/premium.png' },
 ];
 
 export const REVIEWS = [
@@ -150,10 +150,10 @@ export const MAP_PINS = [
 ];
 
 export const GALLERY = [
-  '/kanyakumari.mp4',
-  IMG(1001682), IMG(1654748), IMG(417074),
-  IMG(189349), IMG(2480650), IMG(268415), IMG(1030950),
-  IMG(210186), IMG(3617500), IMG(15286), IMG(259327),
+  '/river.png',
+  '/kaniyakumari cap.png',
+  '/kalimala.png',
+  '/கன்னியாகுமரி....mp4',
 ];
 
 export const LOCAL_EVENTS = [

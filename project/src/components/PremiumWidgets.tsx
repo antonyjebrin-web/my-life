@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Sun, Sunrise, Sunset, Waves, Cloud, Wind, Droplets } from 'lucide-react';
-import { LOCAL_EVENTS } from '@/data/site';
 import { Reveal } from '@/components/ui';
+import { useLang } from '@/context/LanguageContext';
 
 type Weather = {
   temp: number;
@@ -31,6 +31,7 @@ function approxSunTimes(date: Date) {
 }
 
 export default function PremiumWidgets() {
+  const { t } = useLang();
   const [weather, setWeather] = useState<Weather | null>(null);
   const [sun, setSun] = useState(approxSunTimes(new Date()));
 
@@ -82,20 +83,19 @@ export default function PremiumWidgets() {
   }, [fetchWeather]);
 
   return (
-    <section id="explore" className="relative -mt-10 z-20 px-4 sm:px-6 lg:px-8">
+<section id="explore" className="relative -mt-10 z-20 responsive-pad">
       <div className="mx-auto max-w-7xl">
         <Reveal>
           <div className="grid gap-4 rounded-3xl border border-white/40 bg-white/80 p-4 shadow-card backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Weather */}
             <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-ocean-50 to-white p-4 dark:from-ocean-900/30 dark:to-transparent">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ocean-600 text-white">
                 <Cloud className="h-5 w-5" />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Live Weather</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.liveWeather}</p>
                 <p className="font-heading text-lg font-semibold text-ink dark:text-white">
                   {weather ? `${weather.temp}°C` : '—'}
-                  <span className="ml-1 text-sm font-normal text-gray-500">{weather?.condition}</span>
+                  <span className="ml-1 text-sm font-normal text-gray-500">{weather?.condition ? t.premiumWidgets.weather[weather.condition] ?? weather.condition : ''}</span>
                 </p>
                 <div className="mt-0.5 flex items-center gap-3 text-xs text-gray-500">
                   <span className="flex items-center gap-1"><Droplets className="h-3 w-3" />{weather?.humidity}%</span>
@@ -104,53 +104,49 @@ export default function PremiumWidgets() {
               </div>
             </div>
 
-            {/* Sunrise */}
             <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-amber-50 to-white p-4 dark:from-amber-900/20 dark:to-transparent">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400 text-white">
                 <Sunrise className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Today's Sunrise</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunrise}</p>
                 <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunrise}</p>
-                <p className="text-xs text-gray-500">At the sunrise point</p>
+                <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
               </div>
             </div>
 
-            {/* Sunset */}
             <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-orange-50 to-white p-4 dark:from-orange-900/20 dark:to-transparent">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white">
                 <Sunset className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Today's Sunset</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunset}</p>
                 <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunset}</p>
-                <p className="text-xs text-gray-500">From the southern tip</p>
+                <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
               </div>
             </div>
 
-            {/* Sea condition */}
             <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-50 to-white p-4 dark:from-sky-900/20 dark:to-transparent">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400 text-white">
                 <Waves className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Sea Condition</p>
-                <p className="font-heading text-lg font-semibold text-ink dark:text-white">{weather?.seaCondition || 'Loading...'}</p>
-                <p className="text-xs text-gray-500">{weather?.waveHeight ? `${weather.waveHeight}m waves` : 'Loading...'}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.seaCondition}</p>
+                <p className="font-heading text-lg font-semibold text-ink dark:text-white">{weather?.seaCondition ? t.premiumWidgets.sea[weather.seaCondition] ?? weather.seaCondition : t.premiumWidgets.loading}</p>
+                <p className="text-xs text-gray-500">{weather?.waveHeight ? `${weather.waveHeight}m ${t.premiumWidgets.waves}` : t.premiumWidgets.loading}</p>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* Local events strip */}
         <Reveal delay={0.1}>
           <div className="mt-4 flex flex-col gap-3 rounded-3xl border border-white/40 bg-white/70 p-5 shadow-soft backdrop-blur-md dark:border-white/10 dark:bg-slate-900/50 sm:flex-row sm:items-center">
             <div className="flex shrink-0 items-center gap-2">
               <Sun className="h-4 w-4 text-gold-500" />
-              <span className="font-heading text-sm font-semibold text-ink dark:text-white">Local Events</span>
+              <span className="font-heading text-sm font-semibold text-ink dark:text-white">{t.premiumWidgets.localEvents}</span>
             </div>
             <div className="flex gap-3 overflow-x-auto no-scrollbar">
-              {LOCAL_EVENTS.map((e) => (
+              {t.localEvents.map((e) => (
                 <div key={e.name} className="flex shrink-0 items-center gap-2 rounded-full bg-ocean-50 px-3 py-1.5 text-xs dark:bg-ocean-900/30">
                   <span className="font-semibold text-ocean-700 dark:text-ocean-300">{e.month}</span>
                   <span className="text-gray-600 dark:text-gray-300">{e.name}</span>

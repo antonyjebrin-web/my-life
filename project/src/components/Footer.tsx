@@ -1,22 +1,16 @@
 import { motion } from 'framer-motion';
 import { Phone, ShieldCheck, Heart, Quote } from 'lucide-react';
-import { EMERGENCY, SITE, WHATSAPP_LINK } from '@/data/site';
+import { SITE, WHATSAPP_LINK } from '@/data/site';
 import { Section, Reveal, Icon } from '@/components/ui';
-
-const TRUST = [
-  { label: 'Verified Partner', icon: 'BadgeCheck' },
-  { label: '100% Transparent Recommendations', icon: 'Eye' },
-  { label: 'No Hidden Charges', icon: 'Receipt' },
-  { label: 'Fast Response', icon: 'Zap' },
-  { label: 'Local Expert Assistance', icon: 'Users' },
-  { label: 'Safe for Families', icon: 'HeartHandshake' },
-];
+import { useLang } from '@/context/LanguageContext';
 
 export function Emergency() {
+  const { t } = useLang();
+
   return (
-    <Section id="emergency" eyebrow="Emergency" title="Help when you need it" subtitle="Important numbers and contacts, always within reach. Save this page or message us anytime — we're here 24/7.">
+    <Section id="emergency" eyebrow={t.sections.emergency.eyebrow} title={t.sections.emergency.title} subtitle={t.sections.emergency.subtitle}>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {EMERGENCY.map((e, i) => (
+        {t.emergency.map((e, i) => (
           <Reveal key={e.label} delay={i * 0.05}>
             <a
               href={`tel:${e.number.replace(/\s/g, '')}`}
@@ -38,12 +32,12 @@ export function Emergency() {
       {/* Trust strip */}
       <Reveal>
         <div className="mt-10 grid grid-cols-2 gap-3 rounded-3xl border border-gray-100 bg-gradient-to-br from-ocean-50 to-white p-5 dark:border-white/10 dark:from-ocean-900/30 dark:to-transparent sm:grid-cols-3 lg:grid-cols-6">
-          {TRUST.map((t) => (
-            <div key={t.label} className="flex flex-col items-center gap-2 text-center">
+{t.trustStrip.map((tBadge) => (
+            <div key={tBadge.label} className="flex flex-col items-center gap-2 text-center">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ocean-600 shadow-soft dark:bg-slate-800 dark:text-ocean-300">
-                <Icon name={t.icon} className="h-5 w-5" />
+                <Icon name={tBadge.icon} className="h-5 w-5" />
               </span>
-              <span className="text-xs font-medium text-gray-600 dark:text-gray-300">{t.label}</span>
+              <span className="text-xs font-medium text-gray-600 dark:text-gray-300">{tBadge.label}</span>
             </div>
           ))}
         </div>
@@ -53,35 +47,33 @@ export function Emergency() {
 }
 
 export function About() {
+  const { t } = useLang();
+
   return (
-    <Section id="about" eyebrow="About" title="Meet your local travel assistant" subtitle="A note from the founder.">
+    <Section id="about" eyebrow={t.about.eyebrow} title={t.about.title} subtitle={t.about.subtitle}>
       <div className="mx-auto max-w-4xl">
         <Reveal>
           <div className="grid gap-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-card dark:border-white/10 dark:bg-slate-900/60 sm:p-10 md:grid-cols-[auto_1fr] md:items-center">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-ocean-600 to-sky-2 text-white shadow-soft">
-                <span className="font-heading text-3xl font-bold">B</span>
+<div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-yellow-100 text-white shadow-soft sm:h-32 sm:w-32">
+                <img src="/ajceo.png" alt="AJ CEO" className="h-24 w-16 rounded-full object-cover sm:h-28 sm:w-20" />
               </div>
-              <p className="mt-3 font-heading text-base font-semibold text-ink dark:text-white">ANTONY JERIN </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Founder & Local Guide</p>
-              <div className="mt-2 flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                <ShieldCheck className="h-3 w-3" /> Verified Local
+              <p className="mt-3 font-heading text-base font-semibold text-ink dark:text-white">{t.about.founderName}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{t.about.founderRole}</p>
+<div className="mt-2 flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
+                <ShieldCheck className="h-3 w-3" /> {t.about.verifiedLocal}
               </div>
             </div>
             <div className="space-y-4">
               <Quote className="h-7 w-7 text-ocean-200 dark:text-ocean-700" />
-              <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">
-                I grew up watching the sunrise over three seas from this very tip of India. For years I watched travelers miss the real Kanyakumari — the quiet beaches, the family-run kitchens, the stories only locals know.
-              </p>
-              <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">
-                So I started Explore Kanyakumari to be the friend you wish you had in every town. No commissions, no fixed packages — just honest recommendations and a genuine wish that you fall in love with my home the way I have. Message me anytime.
-              </p>
+              <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">{t.about.paragraph1}</p>
+              <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">{t.about.paragraph2}</p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-105">
-                  Say hello on WhatsApp
+                  {t.about.whatsappCTA}
                 </a>
                 <a href="#contact" className="rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/5">
-                  More about us
+                  {t.about.moreAbout}
                 </a>
               </div>
             </div>
@@ -93,18 +85,12 @@ export function About() {
 }
 
 export function Contact() {
-  const items = [
-    { label: 'Phone', value: SITE.phone, href: `tel:${SITE.phoneRaw}`, icon: 'Phone' },
-    { label: 'WhatsApp', value: SITE.phone, href: WHATSAPP_LINK, icon: 'MessageCircle' },
-    { label: 'Instagram', value: 'ajexplorer.in', href: SITE.instagram, icon: 'Instagram' },
-    { label: 'Facebook', value: 'Explore Kanyakumari', href: SITE.facebook, icon: 'Facebook' },
-    { label: 'Email', value: SITE.email, href: `mailto:${SITE.email}`, icon: 'Mail' },
-    { label: 'Google Maps', value: 'Kanyakumari, Tamil Nadu', href: SITE.maps, icon: 'MapPin' },
-  ];
+  const { t } = useLang();
+
   return (
-    <Section id="contact" eyebrow="Contact" title="Let's plan your trip" subtitle="Reach out any way you like. We usually reply within minutes.">
+    <Section id="contact" eyebrow={t.contact.eyebrow} title={t.contact.title} subtitle={t.contact.subtitle}>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((c, i) => (
+        {t.contact.items.map((c, i) => (
           <Reveal key={c.label} delay={i * 0.05}>
             <a href={c.href} target="_blank" rel="noreferrer" className="group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-soft transition-all hover:-translate-y-1 hover:border-ocean-200 hover:shadow-card dark:border-white/10 dark:bg-slate-900/60">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ocean-50 text-ocean-600 transition-colors group-hover:bg-ocean-600 group-hover:text-white dark:bg-ocean-900/40 dark:text-ocean-300">
@@ -123,31 +109,20 @@ export function Contact() {
 }
 
 export function Footer() {
-  const quick = [
-    { label: 'Home', href: '#home' },
-    { label: 'Explore', href: '#explore' },
-    { label: 'Hotels', href: '#hotels' },
-    { label: 'Experiences', href: '#experiences' },
-    { label: 'Food', href: '#food' },
-    { label: 'Trip Planner', href: '#planner' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'About', href: '#about' },
-    { label: 'Contact', href: '#contact' },
-  ];
+  const { t } = useLang();
+
   return (
     <footer className="border-t border-gray-100 bg-white dark:border-white/10 dark:bg-slate-950">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black shadow-sm">
                 <img src="/finel icon.png" alt="Icon" className="h-8 w-8" />
               </span>
-              <span className="font-heading text-base font-semibold text-ink dark:text-white">Explore Kanyakumari</span>
+              <span className="font-heading text-base font-semibold text-ink dark:text-white">{t.footer.logoText}</span>
             </div>
-            <p className="mt-3 max-w-xs text-sm text-gray-500 dark:text-gray-400">
-              Your trusted local travel assistant. Honest recommendations, verified partners and personalized plans — so you can simply enjoy the trip.
-            </p>
+            <p className="mt-3 max-w-xs text-sm text-gray-500 dark:text-gray-400">{t.footer.description}</p>
             <div className="mt-4 flex gap-2">
               <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" aria-label="WhatsApp" className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-ocean-600 hover:text-white dark:bg-white/5 dark:text-gray-300"><Icon name="MessageCircle" className="h-4 w-4" /></a>
               <a href={SITE.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-ocean-600 hover:text-white dark:bg-white/5 dark:text-gray-300"><Icon name="Instagram" className="h-4 w-4" /></a>
@@ -157,36 +132,39 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">Quick Links</h4>
+            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">{t.footer.quickTitle}</h4>
             <ul className="mt-3 space-y-2">
-              {quick.map((q) => (
+              {t.footer.quickLinks.map((q) => (
                 <li key={q.label}><a href={q.href} className="text-sm text-gray-500 transition-colors hover:text-ocean-600 dark:text-gray-400 dark:hover:text-ocean-300">{q.label}</a></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">Legal</h4>
+            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">{t.footer.legalTitle}</h4>
             <ul className="mt-3 space-y-2">
-              <li><a href="#" className="text-sm text-gray-500 transition-colors hover:text-ocean-600 dark:text-gray-400 dark:hover:text-ocean-300">Privacy Policy</a></li>
-              <li><a href="#" className="text-sm text-gray-500 transition-colors hover:text-ocean-600 dark:text-gray-400 dark:hover:text-ocean-300">Terms of Service</a></li>
-              <li><a href="#emergency" className="text-sm text-gray-500 transition-colors hover:text-ocean-600 dark:text-gray-400 dark:hover:text-ocean-300">Emergency Contacts</a></li>
+              {t.footer.legal.map((item) => (
+                <li key={item.label}><a href={item.href} className="text-sm text-gray-500 transition-colors hover:text-ocean-600 dark:text-gray-400 dark:hover:text-ocean-300">{item.label}</a></li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">Emergency</h4>
+            <h4 className="font-heading text-sm font-semibold text-ink dark:text-white">{t.footer.emergencyTitle}</h4>
             <ul className="mt-3 space-y-2 text-sm text-gray-500 dark:text-gray-400">
-              <li className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-red-500" /> Police: 100</li>
-              <li className="flex items-center gap-2"><Heart className="h-3.5 w-3.5 text-red-500" /> Ambulance: 108</li>
-              <li className="flex items-center gap-2"><Icon name="Stethoscope" className="h-3.5 w-3.5 text-red-500" /> Hospital: 04652-246100</li>
+              {t.emergency.slice(0, 3).map((e) => (
+                <li key={e.label} className="flex items-center gap-2">
+                  <Icon name={e.icon} className="h-3.5 w-3.5 text-red-500" />
+                  {e.label}: {e.number}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-gray-100 pt-6 text-xs text-gray-400 dark:border-white/10 sm:flex-row">
-          <p>© {new Date().getFullYear()} Explore Kanyakumari. Made with care by locals.</p>
-          <p>For travelers, by locals. Always honest.</p>
+          <p>{t.footer.note.replace('{year}', String(new Date().getFullYear()))}</p>
+          <p>{t.footer.subtext}</p>
         </div>
       </div>
     </footer>

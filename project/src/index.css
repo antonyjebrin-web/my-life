@@ -92,3 +92,147 @@ section[id] { scroll-margin-top: 80px; }
   break-inside: avoid;
   margin-bottom: 1rem;
 }
+.gallery-video {
+  column-span: all;
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .gallery-video {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Responsive sizing across mobile, tablet, laptop
+   Mobile-first: base styles target phones, media
+   queries progressively enhance for larger screens.
+   ============================================ */
+
+/* Base = Mobile (default) */
+html {
+  font-size: 15px;
+}
+
+/* Small phones (< 400px) */
+@media (max-width: 399px) {
+  html { font-size: 14px; }
+
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+  .section-pad {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* Phone landscape / small tablets (400px - 639px) */
+@media (min-width: 400px) and (max-width: 639px) {
+  html { font-size: 15px; }
+
+  .hero-title {
+    font-size: 2.4rem;
+    line-height: 1.1;
+  }
+}
+
+/* Tablet (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  html { font-size: 16px; }
+
+  .hero-title {
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+  .section-pad {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Laptop / Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  html { font-size: 16.5px; }
+
+  .hero-title {
+    font-size: 4.5rem;
+    line-height: 1.05;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .section-pad {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* Large desktop (>= 1440px) */
+@media (min-width: 1440px) {
+  html { font-size: 17px; }
+}
+
+/* Responsive image sizing for featured cards */
+.feat-img-tall {
+  height: 300px;
+}
+@media (min-width: 640px) {
+  .feat-img-tall { height: 400px; }
+}
+@media (min-width: 1024px) {
+  .feat-img-tall { height: 520px; }
+}
+
+.feat-img-med {
+  height: 260px;
+}
+@media (min-width: 640px) {
+  .feat-img-med { height: 340px; }
+}
+@media (min-width: 1024px) {
+  .feat-img-med { height: 420px; }
+}
+
+/* Gallery image heights */
+.gallery-img {
+  height: 16rem;
+}
+@media (min-width: 640px) {
+  .gallery-img { height: 20rem; }
+}
+@media (min-width: 1024px) {
+  .gallery-img { height: 22rem; }
+}
+
+/* Responsive section headings */
+.section-heading {
+  font-size: 1.75rem;
+}
+@media (min-width: 640px) {
+  .section-heading { font-size: 2.25rem; }
+}
+@media (min-width: 1024px) {
+  .section-heading { font-size: 2.5rem; }
+}
+
+/* Base container padding */
+.responsive-pad {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .responsive-pad { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .responsive-pad { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Reduce motion handled by prefers-reduced-motion already in LogoLoop */
+
