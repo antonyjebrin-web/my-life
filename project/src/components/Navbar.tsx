@@ -16,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [activeId, setActiveId] = useState('home');
   const { theme, toggle } = useTheme();
   const { lang, setLang, t } = useLang();
 
@@ -26,7 +27,28 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = NAV.map((n) => ({ ...n, label: (t.nav as Record<string, string>)[n.id] ?? n.label }));
+  // Track active section while scrolling
+  useEffect(() => {
+    const ids = NAV.map((n) => n.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveId(e.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const navItems = NAV.filter((n) => n.id !== 'experiences' && n.id !== 'blog').map((n) => ({
+    ...n,
+    label: (t.nav as Record<string, string>)[n.id] ?? n.label,
+  }));
 
   return (
     <>
@@ -40,13 +62,16 @@ export default function Navbar() {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo */}
-<a href="#home" className="flex items-center gap-2">
-            <img
-              src="/finel icon.png"
-              alt="Logo"
-              className="h-8 w-8 rounded-2xl object-cover shadow-soft sm:h-9 sm:w-9"
-            />
-<span className={`font-heading text-sm font-semibold tracking-tight sm:text-base ${scrolled ? 'text-white' : 'text-white drop-shadow'}`}>
+          <a href="#home" className="group flex items-center gap-2">
+            <span className="relative">
+              <img
+                src="/finel icon.png"
+                alt="Logo"
+                className="h-8 w-8 rounded-2xl object-cover shadow-soft transition-transform group-hover:scale-110 sm:h-9 sm:w-9"
+              />
+              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-gold-500 ring-2 ring-white dark:ring-slate-900" />
+            </span>
+            <span className={`font-heading text-sm font-semibold tracking-tight sm:text-base ${scrolled ? 'text-white' : 'text-white drop-shadow'}`}>
               Explore <span className="text-gradient-ocean">Kanyakumari</span>
             </span>
           </a>
@@ -57,12 +82,23 @@ export default function Navbar() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`rounded-full px-3 py-1.5 text-sm font-bold transition-colors ${
-                  scrolled
-                    ? 'text-white hover:bg-white/10 hover:text-white'
+                className={`relative rounded-full px-3 py-1.5 text-sm font-bold transition-colors ${
+                  activeId === item.id
+                    ? scrolled
+                      ? 'text-ocean-700 dark:text-ocean-300'
+                      : 'text-white'
+                    : scrolled
+                    ? 'text-gray-200 hover:bg-white/10 hover:text-white dark:text-gray-200 dark:hover:bg-white/10 dark:hover:text-white'
                     : 'text-white/90 hover:bg-white/15 hover:text-white'
                 }`}
               >
+                {activeId === item.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-ocean-100/80 ring-1 ring-ocean-200 dark:bg-ocean-900/40 dark:ring-ocean-500/40"
+                    transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                  />
+                )}
                 {item.label}
               </a>
             ))}
@@ -76,8 +112,8 @@ export default function Navbar() {
                 onClick={() => setLangOpen((v) => !v)}
                 aria-label="Select language"
                 className={`flex h-9 items-center gap-1 rounded-full px-2.5 text-sm font-medium transition-colors ${
-                    scrolled ? 'text-white hover:bg-white/10' : 'text-white hover:bg-white/15'
-                  }`}
+                  scrolled ? 'text-white hover:bg-white/10' : 'text-white hover:bg-white/15'
+                }`}
               >
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">{LANGS.find((l) => l.code === lang)?.flag}</span>
@@ -179,7 +215,11 @@ export default function Navbar() {
                     key={item.id}
                     href={`#${item.id}`}
                     onClick={() => setOpen(false)}
-                    className="rounded-xl px-3 py-2.5 text-base font-medium text-gray-700 transition-colors hover:bg-ocean-50 hover:text-ocean-700 dark:text-gray-200 dark:hover:bg-white/5"
+                    className={`rounded-xl px-3 py-2.5 text-base font-medium transition-colors ${
+                      activeId === item.id
+                        ? 'bg-ocean-50 text-ocean-700 dark:bg-ocean-900/40 dark:text-ocean-300'
+                        : 'text-gray-700 hover:bg-ocean-50 hover:text-ocean-700 dark:text-gray-200 dark:hover:bg-white/5'
+                    }`}
                   >
                     {item.label}
                   </a>
@@ -203,3 +243,4 @@ export default function Navbar() {
     </>
   );
 }
+

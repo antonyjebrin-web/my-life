@@ -15,9 +15,8 @@ type Weather = {
 // Static-ish local data (Kanyakumari coastal). We compute today's sunrise/sunset
 // with a simple approximation so the UI feels live without an API key.
 function approxSunTimes(date: Date) {
-  // Kanyakumari ~8.08N, 77.54E. Approx sunrise ~6:10, sunset ~18:20 with seasonal drift.
   const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000);
-  const drift = 18 * Math.sin(((dayOfYear - 80) / 365) * 2 * Math.PI); // minutes
+  const drift = 18 * Math.sin(((dayOfYear - 80) / 365) * 2 * Math.PI);
   const sunriseMins = 6 * 60 + 10 + drift;
   const sunsetMins = 18 * 60 + 20 - drift;
   const fmt = (m: number) => {
@@ -30,6 +29,19 @@ function approxSunTimes(date: Date) {
   return { sunrise: fmt(sunriseMins), sunset: fmt(sunsetMins) };
 }
 
+function SkeletonCard() {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-slate-900/60">
+      <div className="skeleton h-11 w-11 shrink-0 rounded-xl" />
+      <div className="flex-1 space-y-2">
+        <div className="skeleton h-3 w-20 rounded" />
+        <div className="skeleton h-5 w-24 rounded" />
+        <div className="skeleton h-3 w-28 rounded" />
+      </div>
+    </div>
+  );
+}
+
 export default function PremiumWidgets() {
   const { t } = useLang();
   const [weather, setWeather] = useState<Weather | null>(null);
@@ -39,7 +51,6 @@ export default function PremiumWidgets() {
     const lat = 8.08;
     const lon = 77.54;
 
-    // Fetch weather data
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`)
       .then((r) => r.json())
       .then((d) => {
@@ -58,7 +69,6 @@ export default function PremiumWidgets() {
         setWeather({ temp: 29, condition: 'Clear', humidity: 75, wind: 12, seaCondition: 'Calm', waveHeight: 0.5 })
       );
 
-    // Fetch marine data for sea condition
     fetch(`https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=wave_height`)
       .then((r) => r.json())
       .then((d) => {
@@ -77,65 +87,75 @@ export default function PremiumWidgets() {
 
   useEffect(() => {
     fetchWeather();
-    // Auto-refresh every 5 minutes
     const interval = setInterval(fetchWeather, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [fetchWeather]);
 
   return (
-<section id="explore" className="relative -mt-10 z-20 responsive-pad">
+    <section id="explore" className="relative -mt-10 z-20 responsive-pad">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <div className="grid gap-4 rounded-3xl border border-white/40 bg-white/80 p-4 shadow-card backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-ocean-50 to-white p-4 dark:from-ocean-900/30 dark:to-transparent">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ocean-600 text-white">
-                <Cloud className="h-5 w-5" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.liveWeather}</p>
-                <p className="font-heading text-lg font-semibold text-ink dark:text-white">
-                  {weather ? `${weather.temp}°C` : '—'}
-                  <span className="ml-1 text-sm font-normal text-gray-500">{weather?.condition ? t.premiumWidgets.weather[weather.condition] ?? weather.condition : ''}</span>
-                </p>
-                <div className="mt-0.5 flex items-center gap-3 text-xs text-gray-500">
-                  <span className="flex items-center gap-1"><Droplets className="h-3 w-3" />{weather?.humidity}%</span>
-                  <span className="flex items-center gap-1"><Wind className="h-3 w-3" />{weather?.wind}km/h</span>
+          <div className="grid gap-4 rounded-3xl border border-white/40 bg-white/80 p-4 shadow-premium backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 sm:grid-cols-2 lg:grid-cols-4">
+            {!weather ? (
+              <>
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-ocean-50 to-white p-4 dark:from-ocean-900/30 dark:to-transparent">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ocean-600 to-sky-2 text-white shadow-soft">
+                    <Cloud className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.liveWeather}</p>
+                    <p className="font-heading text-lg font-semibold text-ink dark:text-white">
+                      {weather ? `${weather.temp}°C` : '—'}
+                      <span className="ml-1 text-sm font-normal text-gray-500">{weather?.condition ? t.premiumWidgets.weather[weather.condition] ?? weather.condition : ''}</span>
+                    </p>
+                    <div className="mt-0.5 flex items-center gap-3 text-xs text-gray-500">
+                      <span className="flex items-center gap-1"><Droplets className="h-3 w-3" />{weather?.humidity}%</span>
+                      <span className="flex items-center gap-1"><Wind className="h-3 w-3" />{weather?.wind}km/h</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-amber-50 to-white p-4 dark:from-amber-900/20 dark:to-transparent">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400 text-white">
-                <Sunrise className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunrise}</p>
-                <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunrise}</p>
-                <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
-              </div>
-            </div>
+                <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-amber-50 to-white p-4 dark:from-amber-900/20 dark:to-transparent">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-400 text-white shadow-soft">
+                    <Sunrise className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunrise}</p>
+                    <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunrise}</p>
+                    <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-orange-50 to-white p-4 dark:from-orange-900/20 dark:to-transparent">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white">
-                <Sunset className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunset}</p>
-                <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunset}</p>
-                <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
-              </div>
-            </div>
+                <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-orange-50 to-white p-4 dark:from-orange-900/20 dark:to-transparent">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-red-400 text-white shadow-soft">
+                    <Sunset className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.sunset}</p>
+                    <p className="font-heading text-lg font-semibold text-ink dark:text-white">{sun.sunset}</p>
+                    <p className="text-xs text-gray-500">{t.premiumWidgets.sunriseInfo}</p>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-50 to-white p-4 dark:from-sky-900/20 dark:to-transparent">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400 text-white">
-                <Waves className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.seaCondition}</p>
-                <p className="font-heading text-lg font-semibold text-ink dark:text-white">{weather?.seaCondition ? t.premiumWidgets.sea[weather.seaCondition] ?? weather.seaCondition : t.premiumWidgets.loading}</p>
-                <p className="text-xs text-gray-500">{weather?.waveHeight ? `${weather.waveHeight}m ${t.premiumWidgets.waves}` : t.premiumWidgets.loading}</p>
-              </div>
-            </div>
+                <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-50 to-white p-4 dark:from-sky-900/20 dark:to-transparent">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-ocean-500 text-white shadow-soft">
+                    <Waves className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{t.premiumWidgets.seaCondition}</p>
+                    <p className="font-heading text-lg font-semibold text-ink dark:text-white">{weather?.seaCondition ? t.premiumWidgets.sea[weather.seaCondition] ?? weather.seaCondition : t.premiumWidgets.loading}</p>
+                    <p className="text-xs text-gray-500">{weather?.waveHeight ? `${weather.waveHeight}m ${t.premiumWidgets.waves}` : t.premiumWidgets.loading}</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </Reveal>
 

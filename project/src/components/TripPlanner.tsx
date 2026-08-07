@@ -84,8 +84,8 @@ export default function TripPlanner() {
   return (
     <Section id="planner" eyebrow={t.tripPlanner.eyebrow} title={t.tripPlanner.title} subtitle={t.tripPlanner.subtitle}>
       <div className="mx-auto max-w-3xl">
-        <Reveal>
-          <div className="rounded-3xl border border-yellow-200 bg-white p-6 shadow-card dark:border-yellow-500/30 dark:bg-slate-900/70 sm:p-8">
+<Reveal>
+          <div className="card-3d p-6 shadow-premium sm:p-8">
             <AnimatePresence mode="wait">
               {!submitted ? (
                 <motion.div
@@ -140,11 +140,11 @@ export default function TripPlanner() {
                     <p className="mt-2 text-sm leading-relaxed">{t.tripPlanner.noteText}</p>
                   </div>
 
-                  <button
+<button
                     onClick={() => setSubmitted(true)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-500 px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02]"
+                    className="btn-shine flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-gold-500 to-gold-600 px-6 py-3.5 text-sm font-semibold text-white shadow-glow-ocean transition-transform hover:scale-[1.02]"
                   >
-                    <Sparkles className="h-4 w-4 text-gold-400" />
+                    <Sparkles className="h-4 w-4 text-white" />
                     {t.tripPlanner.createPlan}
                   </button>
                 </motion.div>
@@ -217,10 +217,10 @@ function Field({ label, icon, children }: { label: string; icon: React.ReactNode
 
 function Stepper({ value, min, max, onChange }: { value: number; min: number; max: number; onChange: (v: number) => void }) {
   return (
-    <div className="flex items-center gap-3">
-      <button onClick={() => onChange(Math.max(min, value - 1))} className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 text-lg font-semibold text-gray-600 hover:bg-gray-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/5" aria-label="Decrease">−</button>
+    <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-1.5 dark:border-white/10 dark:bg-white/5 w-fit">
+      <button onClick={() => onChange(Math.max(min, value - 1))} className="flex h-9 w-9 items-center justify-center rounded-xl bg-ocean-50 text-lg font-semibold text-ocean-700 transition-colors hover:bg-ocean-100 dark:bg-ocean-900/40 dark:text-ocean-300 dark:hover:bg-ocean-900/70" aria-label="Decrease">−</button>
       <span className="w-8 text-center font-heading text-lg font-semibold text-ink dark:text-white">{value}</span>
-      <button onClick={() => onChange(Math.min(max, value + 1))} className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 text-lg font-semibold text-gray-600 hover:bg-gray-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/5" aria-label="Increase">+</button>
+      <button onClick={() => onChange(Math.min(max, value + 1))} className="flex h-9 w-9 items-center justify-center rounded-xl bg-ocean-50 text-lg font-semibold text-ocean-700 transition-colors hover:bg-ocean-100 dark:bg-ocean-900/40 dark:text-ocean-300 dark:hover:bg-ocean-900/70" aria-label="Increase">+</button>
     </div>
   );
 }
@@ -231,7 +231,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       onClick={onClick}
       className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
         active
-          ? 'bg-gold-500 text-white shadow-soft'
+          ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-white shadow-glow-ocean'
           : 'bg-white text-gray-600 ring-1 ring-gray-200 hover:ring-gold-500 dark:bg-white/5 dark:text-gray-300 dark:ring-white/10'
       }`}
     >
@@ -244,12 +244,16 @@ function Toggle({ active, onClick, icon, label }: { active: boolean; onClick: ()
   return (
     <button
       onClick={onClick}
+      aria-pressed={active}
       className={`flex items-center justify-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${
         active
-          ? 'border-gold-500 bg-gold-100 text-gold-700 dark:border-gold-500 dark:bg-gold-600/15 dark:text-gold-400'
-          : 'border-gray-200 text-gray-500 hover:border-gray-300 dark:border-white/10 dark:text-gray-400'
+          ? 'border-gold-500 bg-gold-100 text-gold-700 shadow-sm dark:border-gold-500 dark:bg-gold-600/15 dark:text-gold-400'
+          : 'border-gray-200 text-gray-500 hover:border-gray-300 hover:text-ink dark:border-white/10 dark:text-gray-400 dark:hover:text-white'
       }`}
     >
+      <span className={`flex h-5 w-9 items-center rounded-full p-0.5 transition-colors ${active ? 'bg-gold-500' : 'bg-gray-300 dark:bg-white/10'}`}>
+        <span className={`h-4 w-4 transform rounded-full bg-white shadow transition-transform ${active ? 'translate-x-4' : ''}`} />
+      </span>
       {icon}
       {label}
     </button>

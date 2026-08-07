@@ -1,7 +1,11 @@
+import { lazy } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MapPin, ArrowRight, MessageCircle, Sparkles } from 'lucide-react';
 import { WHATSAPP_LINK } from '@/data/site';
 import { useLang } from '@/context/LanguageContext';
+import { SafeCanvas } from '@/components/three/Scene';
+
+const HeroScene = lazy(() => import('@/components/three/HeroScene'));
 
 export default function Hero() {
   const { t } = useLang();
@@ -9,7 +13,7 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
-      {/* Background image */}
+      {/* Original background image */}
       <div className="absolute inset-0">
         <img
           src="/kanyakumari.jpg"
@@ -21,6 +25,13 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
       </div>
 
+      {/* 3D ocean overlay (lazy, performance-gated) */}
+      <div className="absolute inset-0 opacity-30 mix-blend-screen">
+        <SafeCanvas camera={{ position: [0, 0.5, 7], fov: 50 }} className="!absolute !inset-0">
+          <HeroScene />
+        </SafeCanvas>
+      </div>
+
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-4 pt-24 pb-16 text-center sm:px-6">
         <motion.div
@@ -29,7 +40,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md ring-1 ring-white/25"
         >
-<MapPin className="h-3.5 w-3.5 text-sky-2" />
+          <MapPin className="h-3.5 w-3.5 text-sky-2" />
           {hero.locationBadge}
         </motion.div>
 
@@ -37,7 +48,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-className="hero-title font-heading font-bold leading-[1.1] tracking-tight text-white drop-shadow-lg"
+          className="hero-title font-heading font-bold leading-[1.1] tracking-tight text-white drop-shadow-lg"
         >
           {hero.title}
         </motion.h1>
@@ -46,7 +57,7 @@ className="hero-title font-heading font-bold leading-[1.1] tracking-tight text-w
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25 }}
-className="hero-subtitle mx-auto mt-6 max-w-2xl font-light leading-relaxed text-white/90"
+          className="hero-subtitle mx-auto mt-6 max-w-2xl font-light leading-relaxed text-white/90"
         >
           {hero.subtitle}
         </motion.p>
@@ -59,7 +70,7 @@ className="hero-subtitle mx-auto mt-6 max-w-2xl font-light leading-relaxed text-
         >
           <a
             href="#planner"
-            className="group flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ocean-700 shadow-glow transition-transform hover:scale-[1.03] sm:w-auto"
+            className="btn-shine group flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ocean-700 shadow-glow transition-transform hover:scale-[1.03] sm:w-auto"
           >
             <Sparkles className="h-4 w-4 text-gold-500" />
             {hero.plan}
@@ -110,3 +121,4 @@ className="hero-subtitle mx-auto mt-6 max-w-2xl font-light leading-relaxed text-
     </section>
   );
 }
+

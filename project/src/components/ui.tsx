@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import * as Icons from 'lucide-react';
 
 // Section wrapper with consistent spacing and an animated heading
@@ -126,4 +126,81 @@ export function Pill({
       {children}
     </button>
   );
+}
+
+// ---- Premium design-system primitives ----
+
+// Gradient eyebrow chip
+export function Eyebrow({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-ocean-600 to-sky-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-glow-ocean ${className}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+// Elevated card with optional 3D lift
+export function Card({
+  children,
+  className = '',
+  lift = true,
+}: {
+  children: ReactNode;
+  className?: string;
+  lift?: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-3xl border border-gray-100 bg-white shadow-soft dark:border-white/10 dark:bg-slate-900/60 ${
+        lift ? 'lift-3d' : ''
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// Animated number counter
+export function StatCounter({
+  value,
+  suffix = '',
+  duration = 1.2,
+  className = '',
+}: {
+  value: number;
+  suffix?: string;
+  duration?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / (duration * 1000), 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(Math.round(eased * value));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, value, duration]);
+
+  return (
+    <span ref={ref} className={className}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
+// Gradient-highlight word inside a heading
+export function GradientText({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <span className={`text-gradient-ocean ${className}`}>{children}</span>;
 }

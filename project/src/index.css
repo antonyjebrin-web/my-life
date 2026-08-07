@@ -236,3 +236,110 @@ html {
 
 /* Reduce motion handled by prefers-reduced-motion already in LogoLoop */
 
+/* ============================================
+   Premium 3D Redesign — extended design tokens
+   ============================================ */
+
+:root {
+  --gradient-hero: radial-gradient(1200px 600px at 70% -10%, #0f5c8a 0%, #0a3d62 40%, #06223a 100%);
+  --gradient-gold: linear-gradient(135deg, #f6e27a 0%, #D4AF37 50%, #b8932b 100%);
+  --shadow-premium: 0 20px 60px -20px rgba(10, 61, 98, 0.35);
+  --shadow-glow-ocean: 0 0 0 1px rgba(34, 167, 201, 0.2), 0 12px 40px -12px rgba(34, 167, 201, 0.4);
+}
+
+/* Premium depth shadows */
+.shadow-premium {
+  box-shadow: var(--shadow-premium);
+}
+.shadow-glow-ocean {
+  box-shadow: var(--shadow-glow-ocean);
+}
+
+/* Soft gradient text (gold) */
+.text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Elevated dark hero gradient panel */
+.bg-hero-gradient {
+  background: var(--gradient-hero);
+}
+
+/* Animated gradient border card */
+.card-3d {
+  position: relative;
+  border-radius: 24px;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, rgba(34, 167, 201, 0.35), rgba(212, 175, 55, 0.35)) border-box;
+  border: 1px solid transparent;
+}
+.dark .card-3d {
+  background: linear-gradient(#0f172a, #0f172a) padding-box,
+    linear-gradient(135deg, rgba(34, 167, 201, 0.5), rgba(212, 175, 55, 0.5)) border-box;
+}
+
+/* 3D tilt / lift on hover */
+.lift-3d {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  will-change: transform;
+}
+.lift-3d:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-premium);
+}
+
+/* Floating animation utility */
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Shine sweep on premium buttons */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  animation: shine 3.5s infinite;
+}
+@keyframes shine {
+  0% { left: -150%; }
+  60%, 100% { left: 150%; }
+}
+
+/* Skeleton shimmer for loading states */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.15);
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+/* Reduced motion: tame all animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
