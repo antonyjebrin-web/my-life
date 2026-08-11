@@ -105,7 +105,7 @@ const en: Dict = {
     eyebrow: 'About',
     title: 'Meet your local travel assistant',
     subtitle: 'A note from the founder.',
-    founderName: 'ANTONY JERIN',
+    founderName: 'ANTONY JEBRIN',
     founderRole: 'Founder & Local Guide',
     paragraph1: 'I grew up watching the sunrise over three seas from this very tip of India. For years I watched travelers miss the real Kanyakumari — the quiet beaches, the family-run kitchens, the stories only locals know.',
     paragraph2: 'So I started Explore Kanyakumari to be the friend you wish you had in every town. No commissions, no fixed packages — just honest recommendations and a genuine wish that you fall in love with my home the way I have. Message me anytime.',

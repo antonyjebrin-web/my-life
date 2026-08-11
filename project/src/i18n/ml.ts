@@ -105,7 +105,7 @@ const ml: Dict = {
     eyebrow: 'ഞങ്ങളെക്കുറിച്ച്',
     title: 'നിങ്ങളുടെ പ്രാദേശിക യാത്രാ assistant-നെ പരിചയപ്പെടuk',
     subtitle: 'founder-ന്റെ ഒരു കുറിപ്പ്.',
-    founderName: 'ANTONY JERIN',
+    founderName: 'ANTONY JEBRIN',
     founderRole: 'Founder & Local Guide',
     paragraph1: 'ഇന്ത്യയുടെ ഈ tip-ൽ നിന്ന് മൂന്ന് കടലുകൾക്ക് മുകളിൽ സൂര്യോദയം കാണാൻ ഞാൻ വളർന്നu. വർഷങ്ങളോളം യാത്രക്കാർ real Kanyakumari നഷ്ടപ്പെടുന്നത് കണ്ടu — quiet beaches, family-run kitchens, locals മാത്രം അറിയുന്ന stories.',
     paragraph2: 'അതിനāl ഞാൻ ഓരോ നഗരത്തിലും നിങ്ങൾക്ക് വേണമെന്ന് wished friend ആയി ഒരു സേവനം ആരംഭിച്ചu. commissions ഇല്ല, fixed packages ഇല്ല — honest recommendations, നിങ്ങൾ എന്റെ homeland-നെ ഞാൻ love ചെയ്യുന്നതുപോലെ fall in love ചെയ്യട്ടെ എന്ന genuine wish. എപ്പോൾ വേണമെങ്കിലും message ചെയ്യuk.',
