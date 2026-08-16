@@ -5,7 +5,7 @@ const ml: Dict = {
     home: 'ഹോം',
     explore: 'പര്യവേക്ഷണം',
     hotels: 'ഹോട്ടലുകൾ',
-    experiences: 'അനുഭവങ്ങൾ',
+  
     food: 'ഭക്ഷണം',
     planner: 'യാത്രാ പ്ലാനർ',
     blog: 'ബ്ലോഗ്',

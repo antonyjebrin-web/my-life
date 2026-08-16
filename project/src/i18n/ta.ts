@@ -5,7 +5,7 @@ const ta: Dict = {
     home: 'முகப்பு',
     explore: 'ஆராயுங்கள்',
     hotels: 'ஹோட்டல்கள்',
-    experiences: 'அனுபவங்கள்',
+   
     food: 'உணவு',
     planner: 'பயணத் திட்டமிடல்',
     blog: 'வலைப்பதிவு',
@@ -133,7 +133,7 @@ const ta: Dict = {
       { label: 'முகப்பு', href: '#home' },
       { label: 'ஆராயுங்கள்', href: '#explore' },
       { label: 'ஹோட்டல்கள்', href: '#hotels' },
-      { label: 'அனுபவங்கள்', href: '#experiences' },
+    
       { label: 'உணவு', href: '#food' },
       { label: 'பயணத் திட்டமிடல்', href: '#planner' },
       { label: 'வலைப்பதிவு', href: '#blog' },

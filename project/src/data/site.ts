@@ -18,7 +18,6 @@ export const NAV = [
   { id: 'home', label: 'Home' },
   { id: 'explore', label: 'Explore' },
   { id: 'hotels', label: 'Hotels' },
-  { id: 'experiences', label: 'Experiences' },
   { id: 'food', label: 'Food' },
   { id: 'planner', label: 'Trip Planner' },
   { id: 'blog', label: 'Blog' },
