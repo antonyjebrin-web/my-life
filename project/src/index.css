@@ -331,6 +331,100 @@ html {
   animation: shimmer 1.6s infinite;
 }
 
+/* ============================================
+   Custom Glowing Cursor
+   ============================================ */
+
+/* Hide native cursor when custom cursor is active */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* Glow trail */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    circle,
+    rgba(0, 180, 216, 0.45) 0%,
+    rgba(0, 119, 182, 0.25) 40%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  opacity: 0;
+  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Glow dot */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  background: #00b4d8;
+  box-shadow: 0 0 12px rgba(0, 180, 216, 0.9), 0 0 24px rgba(0, 180, 216, 0.5);
+  opacity: 0;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Hover state — expand glow when over interactive elements */
+.cursor-glow--hover {
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 180, 216, 0.55) 0%,
+    rgba(0, 119, 182, 0.3) 45%,
+    transparent 72%
+  );
+}
+
+.cursor-dot--hover {
+  width: 12px;
+  height: 12px;
+  background: #90e0ef;
+  box-shadow: 0 0 16px rgba(144, 224, 239, 1), 0 0 32px rgba(0, 180, 216, 0.7);
+}
+
+/* Pressed state — shrink slightly on click */
+.cursor-glow--pressed {
+  width: 30px;
+  height: 30px;
+}
+
+.cursor-dot--pressed {
+  width: 6px;
+  height: 6px;
+}
+
+/* Dark mode — brighter glow */
+.dark .cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.55) 0%,
+    rgba(0, 180, 216, 0.3) 40%,
+    transparent 70%
+  );
+}
+
+.dark .cursor-dot {
+  background: #00d4ff;
+  box-shadow: 0 0 14px rgba(0, 212, 255, 1), 0 0 28px rgba(0, 212, 255, 0.6);
+}
+
 /* Reduced motion: tame all animations */
 @media (prefers-reduced-motion: reduce) {
   *,

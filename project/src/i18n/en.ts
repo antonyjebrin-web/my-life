@@ -59,7 +59,7 @@ const en: Dict = {
     { name: 'Family Hotels', desc: 'Spacious rooms and kid-friendly amenities for groups.', img: '/family.jpg', location: 'Close to beaches and family dining', price: '₹2,500 – ₹4,000' },
     { name: 'Sea View Hotels', desc: 'Wake up to sunrise views over the Bay of Bengal.', img: '/beachside.jpg', location: 'Oceanfront promenade', price: '₹4,000 – ₹6,500' },
     { name: 'Premium Hotels', desc: 'Thoughtful service, modern comforts and premium dining.', img: '/lux.jpg', location: 'Prime city locations', price: '₹6,500 – ₹9,000' },
-    { name: 'Luxury Resorts', desc: 'Private pools, spa treatments and ultimate relaxation.', img: '/lux.jpg', location: 'Beachside resorts', price: '₹9,000+' },
+    { name: 'Luxury Resorts', desc: 'Private pools, spa treatments and ultimate relaxation.', img: '/luxer.jpg', location: 'Beachside resorts', price: '₹9,000+' },
   ],
   foodGuide: [
     { name: 'Best Seafood', icon: 'Fish', desc: 'Fresh catch grilled, fried and curried.', img: '/seafood.png' },

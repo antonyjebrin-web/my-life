@@ -9,6 +9,7 @@ import { HotelCategories, FoodGuide, InteractiveMap } from '@/components/Discove
 import { Gallery, Reviews } from '@/components/Content';
 import { Emergency, About, Contact, Footer } from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
+import CustomCursor from '@/components/CustomCursor';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           </main>
           <Footer />
           <FloatingButtons />
+          <CustomCursor />
         </div>
       </LanguageProvider>
     </ThemeProvider>

@@ -59,7 +59,7 @@ const ml: Dict = {
     { name: 'കുടുംബ ഹോട്ടലുകൾ', desc: 'ഗ്രൂപ്പുകൾക്ക് വിശാലമായ മുറികളും കുട്ടികൾക്ക് അനുയോജ്യമായ സൗകaryങ്ങളും.', img: '/family.jpg', location: 'beaches-നും കുടുംബ dining-നും 근처', price: '₹2,500 – ₹4,000' },
     { name: 'കടൽ കാഴ്ച ഹോട്ടലുകൾ', desc: 'ബംഗാൾ ഉപസാഗരത്തിന് മുകളിൽ സൂര്യോദയ കാഴ്ചയോടെ ഉണരuk.', img: '/beachside.jpg', location: 'Oceanfront promenade', price: '₹4,000 – ₹6,500' },
     { name: 'പ്രീമിയം ഹോട്ടലുകൾ', desc: 'ചിന്താപൂർവ്വമായ സേവനം, ആധുനിക comforts, premium dining.', img: '/lux.jpg', location: 'Prime city locations', price: '₹6,500 – ₹9,000' },
-    { name: 'ലക്സuriesortukൾ', desc: 'Private pools, spa treatments, ultimate relaxation.', img: '/lux.jpg', location: 'Beachside resorts', price: '₹9,000+' },
+    { name: 'ലക്സuriesortukൾ', desc: 'Private pools, spa treatments, ultimate relaxation.', img: '/luxer.jpg', location: 'Beachside resorts', price: '₹9,000+' },
   ],
   foodGuide: [
     { name: 'മികച്ച കടൽമീൻ', icon: 'Fish', desc: 'പുതിയ catch — grill, fry, curry.', img: '/seafood.png' },

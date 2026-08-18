@@ -88,7 +88,7 @@ export const HOTEL_CATEGORIES = [
   {
     name: 'Luxury Resorts',
     desc: 'Private pools, spa treatments and ultimate relaxation.',
-    img: IMG(323772, 900),
+    img: '/luxer.jpg',
     location: 'Beachside resorts',
     price: '₹9,000+',
   },
