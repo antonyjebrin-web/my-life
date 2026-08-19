@@ -95,7 +95,7 @@ export default function Navbar() {
                 {activeId === item.id && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-ocean-100/80 ring-1 ring-ocean-200 dark:bg-ocean-900/40 dark:ring-ocean-500/40"
+                    className="absolute inset-0 -z-10 rounded-full bg-transparent ring-1 ring-ocean-200 dark:ring-ocean-500/40"
                     transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                   />
                 )}
@@ -221,7 +221,14 @@ export default function Navbar() {
                         : 'text-gray-700 hover:bg-ocean-50 hover:text-ocean-700 dark:text-gray-200 dark:hover:bg-white/5'
                     }`}
                   >
-                    {item.label}
+                {activeId === item.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-transparent ring-1 ring-ocean-200 dark:ring-ocean-500/40"
+                    transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                  />
+                )}
+                {item.label}
                   </a>
                 ))}
               </nav>

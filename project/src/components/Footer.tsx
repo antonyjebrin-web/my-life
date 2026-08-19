@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, useEffect, useRef } from 'react';
 import { Phone, ShieldCheck, Quote } from 'lucide-react';
 import { SITE, WHATSAPP_LINK } from '@/data/site';
 import { Section, Reveal, Icon } from '@/components/ui';
@@ -54,17 +54,50 @@ export function Emergency() {
 
 export function About() {
   const { t } = useLang();
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = imageRef.current;
+    if (!el) return;
+
+    const prevent = (e: Event) => e.preventDefault();
+
+    el.addEventListener('contextmenu', prevent);
+    el.addEventListener('selectstart', prevent);
+    el.addEventListener('dragstart', prevent);
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      if (
+        (e.ctrlKey && ['s', 'p', 'u'].includes(key)) ||
+        key === 'printscreen' ||
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(key))
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      el.removeEventListener('contextmenu', prevent);
+      el.removeEventListener('selectstart', prevent);
+      el.removeEventListener('dragstart', prevent);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
 
   return ( 
     <Section id="about" eyebrow={t.about.eyebrow} title={t.about.title} subtitle={t.about.subtitle}>
-<div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl">
         <Reveal>
           <div className="card-3d grid gap-8 p-6 shadow-premium sm:p-10 md:grid-cols-[auto_1fr] md:items-center">
             <div className="flex flex-col items-center text-center">
               <div className="relative">
                 <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-ocean-600 to-gold-500 opacity-60 blur-lg" />
-                <div className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full ring-2 ring-gold-500/60 shadow-soft sm:h-32 sm:w-32">
-                  <img src="/ajceo.png" alt="AJ CEO" className="h-24 w-16 rounded-full object-cover sm:h-28 sm:w-20" />
+                <div ref={imageRef} className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full ring-2 ring-gold-500/60 shadow-soft sm:h-32 sm:w-32 select-none" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
+                  <img src="/ajceo.png" alt="AJ CEO" className="h-24 w-16 rounded-full object-cover sm:h-28 sm:w-20 pointer-events-none" draggable={false} />
                 </div>
                 <span className="absolute -right-1 -bottom-1 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white ring-2 ring-white dark:ring-slate-900">
                   <ShieldCheck className="h-4 w-4" />

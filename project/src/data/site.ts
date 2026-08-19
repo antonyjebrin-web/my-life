@@ -149,10 +149,11 @@ export const MAP_PINS = [
 ];
 
 export const GALLERY = [
-  '/river.png',
-  '/kaniyakumari cap.png',
-  '/kalimala.png',
-  '/கன்னியாகுமரி....mp4',
+  { src: '/memory/river.png', caption: 'Lush greenery and nearby waterfalls' },
+  { src: '/memory/kaniyakumari cap.png', caption: 'The confluence of three seas' },
+  { src: '/memory/kalimala.png', caption: 'A hidden gem waiting to be explored' },
+  { src: '/memory/vallam.png', caption: 'Traditional vallam boat on the coast' },
+  { src: '/memory/கன்னியாகுமரி....mp4', caption: 'A glimpse of Kanyakumari in motion' },
 ];
 
 export const LOCAL_EVENTS = [

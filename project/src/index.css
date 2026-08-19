@@ -437,3 +437,125 @@ html {
   }
 }
 
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   Mobile / Tablet / Laptop / Desktop
+   ============================================ */
+
+/* Mobile (default) */
+html {
+  font-size: 14px;
+}
+
+/* Small tablets / large phones (400px - 639px) */
+@media (min-width: 400px) {
+  html { font-size: 15px; }
+}
+
+/* Tablets (640px - 1023px) */
+@media (min-width: 640px) {
+  html { font-size: 15.5px; }
+
+  .hero-title {
+    font-size: 2.6rem;
+  }
+}
+
+/* Laptops / small desktops (1024px - 1439px) */
+@media (min-width: 1024px) {
+  html { font-size: 16px; }
+
+  .hero-title {
+    font-size: 3.2rem;
+  }
+}
+
+/* Large desktops (1440px+) */
+@media (min-width: 1440px) {
+  html { font-size: 16.5px; }
+
+  .hero-title {
+    font-size: 3.8rem;
+  }
+}
+
+/* Responsive containers */
+.container-responsive {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Responsive images */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive aspect ratios */
+.aspect-mobile { aspect-ratio: 4 / 3; }
+.aspect-tablet { aspect-ratio: 16 / 9; }
+
+@media (min-width: 640px) {
+  .aspect-mobile { aspect-ratio: 16 / 9; }
+}
+
+/* Responsive grid helpers */
+.grid-responsive {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive {
+    gap: 2rem;
+  }
+}
+
+/* Mobile-first visibility */
+@media (max-width: 639px) {
+  .hide-below-tablet { display: none !important; }
+  .show-mobile-only { display: block !important; }
+}
+
+@media (min-width: 640px) {
+  .show-tablet-up { display: block !important; }
+  .hide-tablet-up { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .show-desktop-up { display: block !important; }
+  .hide-desktop-up { display: none !important; }
+}
+
+/* Ultra-wide */
+@media (min-width: 1536px) {
+  .container-responsive {
+    max-width: 1440px;
+  }
+}
+
