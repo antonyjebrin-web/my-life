@@ -72,6 +72,7 @@ export function WhyChooseUs() {
             <SafeCanvas
               camera={{ position: [0, 1.5, 6], fov: 45 }}
               className="!absolute !inset-0 h-full w-full"
+              bordered
             >
               <DataViz data={chartData} />
             </SafeCanvas>
