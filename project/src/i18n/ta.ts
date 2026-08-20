@@ -133,10 +133,8 @@ const ta: Dict = {
       { label: 'முகப்பு', href: '#home' },
       { label: 'ஆராயுங்கள்', href: '#explore' },
       { label: 'ஹோட்டல்கள்', href: '#hotels' },
-    
       { label: 'உணவு', href: '#food' },
       { label: 'பயணத் திட்டமிடல்', href: '#planner' },
-      { label: 'வலைப்பதிவு', href: '#blog' },
       { label: 'எங்களைப் பற்றி', href: '#about' },
       { label: 'தொடர்பு', href: '#contact' },
     ],
