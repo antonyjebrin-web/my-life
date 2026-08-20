@@ -113,7 +113,7 @@ export function About() {
               <Quote className="h-7 w-7 text-ocean-200 dark:text-ocean-700" />
               <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">{t.about.paragraph1}</p>
               <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300">{t.about.paragraph2}</p>
-<div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 pt-2">
                 <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-105 hover:shadow-premium">
                   {t.about.whatsappCTA}
                 </a>
@@ -134,7 +134,7 @@ export function Contact() {
 
   return (
     <Section id="contact" eyebrow={t.contact.eyebrow} title={t.contact.title} subtitle={t.contact.subtitle}>
-<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {t.contact.items.map((c, i) => (
           <Reveal key={c.label} delay={i * 0.05}>
             <a href={c.href} target="_blank" rel="noreferrer" className="lift-3d group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-slate-900/60">
@@ -150,6 +150,12 @@ export function Contact() {
           </Reveal>
         ))}
       </div>
+      <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+        Explore our <a href="#hotels" className="text-ocean-600 underline hover:text-ocean-700 dark:text-ocean-400">hotels</a>, <a href="#food" className="text-ocean-600 underline hover:text-ocean-700 dark:text-ocean-400">food guide</a>, <a href="#planner" className="text-ocean-600 underline hover:text-ocean-700 dark:text-ocean-400">trip planner</a>, and <a href="#map" className="text-ocean-600 underline hover:text-ocean-700 dark:text-ocean-400">local map</a>.
+      </p>
+      <p className="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">
+        Popular places to visit in Kanyakumari: Thiruvalluvar Statue, Vivekananda Rock, Kanyakumari Temple, southernmost tip of mainland India, and hidden beaches like Kalimala. Plan your Kanyakumari sightseeing with AJ Explorer.
+      </p>
     </Section>
   );
 }
@@ -169,7 +175,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black shadow-sm">
-                <img src="/finel icon.png" alt="Icon" className="h-8 w-8" />
+                <img src="/finel icon.png" alt="AJ Explorer logo" className="h-8 w-8" />
               </span>
               <span className="font-heading text-base font-semibold text-ink dark:text-white">{t.footer.logoText}</span>
             </div>

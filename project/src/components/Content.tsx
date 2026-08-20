@@ -91,7 +91,7 @@ export function Gallery() {
                   ) : (
                     <img
                       src={item.src}
-                      alt={`${t.gallerySection.title} ${i + 1}`}
+                      alt={item.caption}
                       className="h-full w-full object-cover"
                       draggable={false}
                     />
