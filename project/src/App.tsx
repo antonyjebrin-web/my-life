@@ -24,7 +24,7 @@ function App() {
       setTimeout(() => {
         setShowLoader(false);
         sessionStorage.setItem('logingkkShown', 'true');
-      }, 2000);
+      }, 5000);
     }
   }, []);
 
