@@ -12,7 +12,7 @@ export default function Hero() {
   const hero = t.hero;
 
   return (
-    <section id="home" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+    <section id="home" className="relative flex min-h-[100svh] min-h-[100dvh] items-center justify-center overflow-hidden">
       {/* Original background image */}
       <div className="absolute inset-0">
         <img

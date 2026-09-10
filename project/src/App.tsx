@@ -33,13 +33,13 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen bg-white text-ink dark:bg-slate-950 dark:text-gray-100">
+        <div className="min-h-screen min-h-[100dvh] overflow-x-hidden bg-white text-ink dark:bg-slate-950 dark:text-gray-100">
           {showLoader && (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white px-4">
               <img
                 src="/logingkk.png"
                 alt="Loading"
-                className="max-w-[90vw] max-h-[90vh] object-contain"
+                className="max-h-[90dvh] max-w-[90vw] object-contain"
               />
             </div>
           )}
