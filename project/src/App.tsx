@@ -40,6 +40,8 @@ function App() {
                 src="/logingkk.png"
                 alt="Loading"
                 className="max-h-[90dvh] max-w-[90vw] object-contain"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           )}
@@ -69,4 +71,3 @@ function App() {
 }
 
 export default App;
-

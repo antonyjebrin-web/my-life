@@ -68,6 +68,7 @@ export default function Navbar() {
                 src="/finel icon.png"
                 alt="AJ Explorer logo"
                 className="h-8 w-8 rounded-2xl object-cover shadow-soft transition-transform group-hover:scale-110 sm:h-9 sm:w-9"
+                decoding="async"
               />
               <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-gold-500 ring-2 ring-white dark:ring-slate-900" />
             </span>
@@ -250,4 +251,3 @@ export default function Navbar() {
     </>
   );
 }
-

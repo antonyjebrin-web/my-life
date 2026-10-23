@@ -33,6 +33,8 @@ export function QuickActions() {
                     src={imageMap[a.icon]}
                     alt=""
                     className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 transition-opacity duration-300 group-hover:opacity-30"
+                    loading="lazy"
+                    decoding="async"
                     aria-hidden="true"
                   />
                 )}

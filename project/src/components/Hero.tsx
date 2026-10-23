@@ -20,6 +20,8 @@ export default function Hero() {
           alt="Sunrise over the ocean at Kanyakumari"
           className="h-full w-full object-cover"
           loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ocean-900/40 via-ocean-900/30 to-ocean-900/70" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
@@ -121,4 +123,3 @@ export default function Hero() {
     </section>
   );
 }
-

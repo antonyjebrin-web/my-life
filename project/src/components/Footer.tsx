@@ -97,7 +97,7 @@ export function About() {
               <div className="relative">
                 <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-ocean-600 to-gold-500 opacity-60 blur-lg" />
                 <div ref={imageRef} className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full ring-2 ring-gold-500/60 shadow-soft sm:h-32 sm:w-32 select-none" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
-                  <img src="/ajceo.png" alt="AJ CEO" className="h-24 w-16 rounded-full object-cover sm:h-28 sm:w-20 pointer-events-none" draggable={false} />
+                  <img src="/ajceo.png" alt="AJ CEO" className="h-24 w-16 rounded-full object-cover sm:h-28 sm:w-20 pointer-events-none" loading="lazy" decoding="async" draggable={false} />
                 </div>
                 <span className="absolute -right-1 -bottom-1 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white ring-2 ring-white dark:ring-slate-900">
                   <ShieldCheck className="h-4 w-4" />
@@ -175,7 +175,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black shadow-sm">
-                <img src="/finel icon.png" alt="AJ Explorer logo" className="h-8 w-8" />
+                <img src="/finel icon.png" alt="AJ Explorer logo" className="h-8 w-8" loading="lazy" decoding="async" />
               </span>
               <span className="font-heading text-base font-semibold text-ink dark:text-white">{t.footer.logoText}</span>
             </div>

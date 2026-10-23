@@ -48,7 +48,7 @@ export default function FloatingButtons() {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="mb-2 w-72 overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-slate-800"
+            className="mb-2 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-slate-800"
           >
             <div className="flex items-center justify-between bg-[#25D366] px-4 py-3">
               <div className="flex items-center gap-2">

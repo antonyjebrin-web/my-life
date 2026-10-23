@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Quote } from 'lucide-react';
 import { GALLERY } from '@/data/site';
@@ -9,15 +9,33 @@ export function Gallery() {
   const { t } = useLang();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const total = GALLERY.length;
 
   useEffect(() => {
-    if (isHovered) return;
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+    if (!('IntersectionObserver' in window)) {
+      setIsNearViewport(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsNearViewport(entry.isIntersecting),
+      { rootMargin: '200px 0px' },
+    );
+    observer.observe(gallery);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isHovered || !isNearViewport) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % total);
     }, 4000);
     return () => clearInterval(timer);
-  }, [isHovered, total]);
+  }, [isHovered, isNearViewport, total]);
 
   const goTo = (index: number) => {
     setActiveIndex((index + total) % total);
@@ -52,6 +70,7 @@ export function Gallery() {
   return (
     <Section id="gallery" eyebrow={t.gallerySection.eyebrow} title={t.gallerySection.title} subtitle={t.gallerySection.subtitle}>
       <div
+        ref={galleryRef}
         className="relative mx-auto w-full max-w-4xl"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -80,12 +99,12 @@ export function Gallery() {
                 <div className="h-full w-full overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] sm:border-[4px] border-white shadow-2xl dark:border-slate-800">
                   {isVideo ? (
                     <video
-                      src={item.src}
-                      autoPlay
+                      autoPlay={offset === 0 && isNearViewport}
                       muted
                       loop
                       playsInline
-                      preload="auto"
+                      preload={offset === 0 && isNearViewport ? 'auto' : 'none'}
+                      src={offset === 0 && isNearViewport ? item.src : undefined}
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -93,6 +112,8 @@ export function Gallery() {
                       src={item.src}
                       alt={item.caption}
                       className="h-full w-full object-cover"
+                      loading={offset === 0 && isNearViewport ? 'eager' : 'lazy'}
+                      decoding="async"
                       draggable={false}
                     />
                   )}
