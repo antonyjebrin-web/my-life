@@ -137,7 +137,12 @@ export function Contact() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {t.contact.items.map((c, i) => (
           <Reveal key={c.label} delay={i * 0.05}>
-            <a href={c.href} target="_blank" rel="noreferrer" className="lift-3d group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-slate-900/60">
+            <a
+              href={c.href}
+              target={c.href.startsWith('tel:') ? undefined : '_blank'}
+              rel={c.href.startsWith('tel:') ? undefined : 'noreferrer'}
+              className="lift-3d group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-slate-900/60"
+            >
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-ocean-600 to-sky-2 text-white transition-transform duration-300 group-hover:scale-110">
                 <Icon name={c.icon} className="h-5 w-5" />
               </span>

@@ -118,7 +118,7 @@ const ta: Dict = {
     title: 'உங்கள் பயணத்தைத் திட்டமிடுவோம்',
     subtitle: 'உங்களுக்கு விருப்பமான வழியில் தொடர்பு கொள்ளுங்கள். பொதுவாக நிமிடங்களில் பதிலளிக்கிறோம்.',
     items: [
-      { label: 'தொலைபேசி', value: '+91 90434 35765', href: 'tel:+919043435765', icon: 'Phone' },
+      { label: 'தொலைபேசி', value: '+91 73580 40102', href: 'tel:+917358040102', icon: 'Phone' },
       { label: 'WhatsApp', value: '+91 90434 35765', href: 'https://wa.me/919043435765', icon: 'MessageCircle' },
       { label: 'Instagram', value: 'ajexplorer.in', href: 'https://instagram.com/ajexplorer.in', icon: 'Instagram' },
       { label: 'Facebook', value: 'Explore Kanyakumari', href: 'https://facebook.com', icon: 'Facebook' },

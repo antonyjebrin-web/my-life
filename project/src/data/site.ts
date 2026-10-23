@@ -2,8 +2,8 @@
 
 export const SITE = {
   name: 'Explore Kanyakumari',
-  phone: '+91 90434 35765',
-  phoneRaw: '+919043435765',
+  phone: '+91 73580 40102',
+  phoneRaw: '+917358040102',
   whatsapp: '919043435765',
   email: 'ajexplorer.in@gmail.com',
   instagram: 'https://instagram.com/ajexplorer.in',

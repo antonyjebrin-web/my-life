@@ -118,7 +118,7 @@ const hi: Dict = {
     title: 'आइए आपकी यात्रा की योजना बनाएं',
     subtitle: 'जैसे चाहें संपर्क करें। हम आमतौर पर मिनटों में जवाब देते हैं।',
     items: [
-      { label: 'फोन', value: '+91 90434 35765', href: 'tel:+919043435765', icon: 'Phone' },
+      { label: 'फोन', value: '+91 73580 40102', href: 'tel:+917358040102', icon: 'Phone' },
       { label: 'WhatsApp', value: '+91 90434 35765', href: 'https://wa.me/919043435765', icon: 'MessageCircle' },
       { label: 'Instagram', value: 'ajexplorer.in', href: 'https://instagram.com/ajexplorer.in', icon: 'Instagram' },
       { label: 'Facebook', value: 'Explore Kanyakumari', href: 'https://facebook.com', icon: 'Facebook' },
